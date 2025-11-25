@@ -2,1281 +2,1298 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
+  <title>BillionMind AI – Acelerador de Disciplina</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BillionMind AI – Seu chat de alta performance</title>
+
   <style>
     :root {
-      --bg-main: #05060a;
-      --bg-card: #0c0d16;
-      --bg-soft: #101121;
-      --gold: #f4c86c;
-      --gold-soft: rgba(244, 200, 108, 0.18);
-      --white: #ffffff;
-      --text-soft: #c2c3d6;
-      --accent: #45b3ff;
-      --success: #33d17a;
-      --radius-lg: 18px;
-      --radius-xl: 26px;
-      --shadow-soft: 0 20px 44px rgba(0, 0, 0, 0.85);
-      --max-width: 1180px;
+      --bg-main: #05070c;
+      --bg-card: #0b1018;
+      --bg-soft: #070b13;
+      --emerald: #10b981;
+      --emerald-soft: #34d399;
+      --gold: #facc6b;
+      --gold-muted: #c49b3f;
+      --danger: #ef4444;
+      --text-main: #f9fafb;
+      --text-soft: #cbd5f5;
+      --text-muted: #8b91aa;
+      --border-soft: rgba(148, 163, 184, 0.35);
+      --radius-xl: 22px;
+      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.8);
     }
 
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background:
-        radial-gradient(circle at top, rgba(244, 200, 108, 0.15) 0, transparent 50%),
-        radial-gradient(circle at bottom, rgba(69, 179, 255, 0.16) 0, transparent 55%),
-        #05060a;
-      color: var(--white);
-      line-height: 1.6;
-      scroll-behavior: smooth;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    .page {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #151827 0, #05070c 50%, #020309 100%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
     }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      backdrop-filter: blur(16px);
-      background: linear-gradient(
-        to bottom,
-        rgba(5, 6, 12, 0.98),
-        rgba(5, 6, 12, 0.88),
-        transparent
-      );
-      border-bottom: 1px solid rgba(244, 200, 108, 0.18);
-    }
-
-    .nav {
-      max-width: var(--max-width);
+    .app-shell {
+      max-width: 980px;
       margin: 0 auto;
-      padding: 14px 18px;
+      padding: 14px 14px 80px;
+    }
+
+    /* HEADER */
+    header.app-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
       gap: 10px;
-      font-weight: 700;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-    }
-
-    .logo-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      background:
-        radial-gradient(circle at 20% 0, #ffffff, #f4c86c 30%, #b6822a 70%),
-        radial-gradient(circle at 100% 100%, #45b3ff, transparent 60%);
-      box-shadow: 0 0 22px rgba(244, 200, 108, 0.9);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .logo-mark::after {
-      content: "";
-      position: absolute;
-      inset: 5px;
-      border-radius: inherit;
-      border: 1px solid rgba(5, 6, 12, 0.7);
-      box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.9);
-    }
-
-    .logo span:last-child {
-      color: var(--gold);
-    }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-      font-size: 0.9rem;
-      color: var(--text-soft);
-    }
-
-    .nav-links a {
-      position: relative;
-      padding-bottom: 2px;
-    }
-
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 0;
-      height: 1px;
-      background: linear-gradient(90deg, var(--gold), var(--accent));
-      transition: width 0.18s ease-out;
-    }
-
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-
-    .nav-cta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 9px 20px;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-      font-size: 0.9rem;
-      font-weight: 600;
-      transition:
-        transform 0.15s ease-out,
-        box-shadow 0.15s ease-out,
-        background 0.15s ease-out,
-        opacity 0.15s ease-out;
-      white-space: nowrap;
-    }
-
-    .btn-gold {
-      background: linear-gradient(135deg, #f9dc8e, #f4c86c, #c7902c);
-      color: #090909;
-      box-shadow: 0 12px 28px rgba(244, 200, 108, 0.55);
-    }
-
-    .btn-gold:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 16px 38px rgba(244, 200, 108, 0.75);
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid rgba(244, 200, 108, 0.4);
-      color: var(--gold);
-    }
-
-    .btn-outline:hover {
-      background: rgba(244, 200, 108, 0.06);
-      transform: translateY(-1px);
-    }
-
-    main {
-      flex: 1;
-    }
-
-    section {
-      padding: 60px 18px;
-    }
-
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-    }
-
-    /* HERO */
-
-    #inicio {
-      padding-top: 76px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.1fr);
-      gap: 32px;
-      align-items: stretch;
-    }
-
-    .pill-top {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 4px 12px 4px 4px;
-      border-radius: 999px;
-      border: 1px solid rgba(244, 200, 108, 0.35);
-      background: rgba(5, 6, 12, 0.9);
-      font-size: 0.75rem;
-      color: var(--text-soft);
-      margin-bottom: 18px;
-    }
-
-    .pill-dot {
-      width: 20px;
-      height: 20px;
-      border-radius: 999px;
-      background:
-        conic-gradient(from 220deg, #f4c86c, #45b3ff, #f4c86c);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 16px rgba(244, 200, 108, 0.7);
-    }
-
-    .pill-dot span {
-      width: 13px;
-      height: 13px;
-      border-radius: inherit;
-      border: 1px solid rgba(5, 6, 12, 0.8);
-      background: radial-gradient(circle at 30% 0, #ffffff, #f4c86c);
-    }
-
-    .hero-title {
-      font-size: clamp(2.2rem, 3.3vw, 3rem);
-      line-height: 1.05;
-      margin-bottom: 12px;
-      letter-spacing: 0.02em;
-    }
-
-    .hero-title span {
-      background: linear-gradient(100deg, #ffffff, #f4c86c);
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    .hero-subtitle {
-      font-size: 0.98rem;
-      color: var(--text-soft);
-      max-width: 480px;
-      margin-bottom: 20px;
-    }
-
-    .hero-bullets {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      max-width: 430px;
-      margin-bottom: 22px;
-      font-size: 0.8rem;
-      color: var(--text-soft);
-    }
-
-    .hero-bullets span {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-bullets span::before {
-      content: "";
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--gold);
-    }
-
-    .hero-cta-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .hero-note {
-      font-size: 0.78rem;
-      color: var(--text-soft);
-    }
-
-    .hero-note strong {
-      color: var(--gold);
-    }
-
-    /* CHAT + PAINEL */
-
-    .chat-shell {
-      border-radius: var(--radius-xl);
-      background:
-        radial-gradient(circle at 0 0, rgba(244, 200, 108, 0.28), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(69, 179, 255, 0.32), transparent 60%),
-        var(--bg-card);
-      border: 1px solid rgba(244, 200, 108, 0.24);
-      box-shadow: var(--shadow-soft);
-      padding: 16px 14px 14px;
-      display: grid;
-      grid-template-rows: auto auto minmax(0, 1fr) auto;
-      gap: 10px;
-      min-height: 420px;
-    }
-
-    .chat-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      font-size: 0.8rem;
-    }
-
-    .chat-header-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .chat-status-dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 0, #ffffff, #33d17a);
-      box-shadow: 0 0 10px rgba(51, 209, 122, 0.8);
-    }
-
-    .chat-header-right {
-      font-size: 0.7rem;
-      color: var(--text-soft);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .chip-small {
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(244, 200, 108, 0.35);
-      background: rgba(5, 6, 12, 0.9);
-    }
-
-    .chat-meta {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 8px;
-      font-size: 0.74rem;
-    }
-
-    .meta-card {
-      background: rgba(5, 6, 14, 0.96);
-      border-radius: 14px;
-      border: 1px solid rgba(244, 200, 108, 0.2);
-      padding: 8px 9px;
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .meta-label {
-      color: var(--text-soft);
-      font-size: 0.72rem;
-    }
-
-    .meta-value {
-      font-size: 0.86rem;
-      font-weight: 600;
-    }
-
-    .meta-value.gold {
-      color: var(--gold);
-    }
-
-    .meta-value.green {
-      color: var(--success);
-    }
-
-    .meta-badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 2px;
-    }
-
-    .meta-badge {
-      padding: 2px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(69, 179, 255, 0.5);
-      background: rgba(9, 12, 20, 0.9);
-      color: var(--accent);
-      font-size: 0.7rem;
-    }
-
-    .chat-window {
-      background: rgba(5, 6, 12, 0.96);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.02);
-      padding: 10px;
-      overflow-y: auto;
-      max-height: 260px;
-    }
-
-    .msg {
-      font-size: 0.8rem;
-      max-width: 94%;
-      padding: 7px 10px;
-      border-radius: 12px;
-      margin-bottom: 8px;
-    }
-
-    .msg-system {
-      margin-inline: auto;
-      text-align: center;
-      font-size: 0.72rem;
-      color: var(--text-soft);
-      background: transparent;
-    }
-
-    .msg-ai {
-      background: #10121f;
-      border: 1px solid rgba(244, 200, 108, 0.3);
-      border-bottom-left-radius: 3px;
-    }
-
-    .msg-user {
-      margin-left: auto;
-      background: #151732;
-      border: 1px solid rgba(69, 179, 255, 0.35);
-      border-bottom-right-radius: 3px;
-    }
-
-    .quick-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 0.72rem;
-    }
-
-    .quick-chip {
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: rgba(8, 9, 18, 0.93);
-      border: 1px solid rgba(244, 200, 108, 0.26);
-      cursor: pointer;
-      color: var(--text-soft);
-    }
-
-    .quick-chip span {
-      color: var(--gold);
-      margin-right: 3px;
-    }
-
-    .chat-input-row {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      margin-top: 4px;
-    }
-
-    .chat-input {
-      flex: 1;
-      padding: 9px 11px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.04);
-      background: rgba(10, 11, 22, 0.95);
-      color: var(--white);
-      font-size: 0.8rem;
-      outline: none;
-    }
-
-    .chat-input::placeholder {
-      color: #6d6f85;
-    }
-
-    .chat-send {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: none;
-      background: linear-gradient(135deg, var(--gold), #f8dd93);
-      color: #05060a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 0.9rem;
-      box-shadow: 0 8px 18px rgba(244, 200, 108, 0.75);
-    }
-
-    /* SEÇÕES */
-
-    .section-title {
-      font-size: 1.7rem;
-      margin-bottom: 10px;
-    }
-
-    .section-subtitle {
-      font-size: 0.95rem;
-      color: var(--text-soft);
-      max-width: 540px;
-      margin-bottom: 26px;
-    }
-
-    #como-funciona {
-      background: radial-gradient(circle at top, rgba(244, 200, 108, 0.08), transparent 55%);
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .card {
-      background: rgba(8, 9, 18, 0.98);
-      border-radius: var(--radius-lg);
-      border: 1px solid rgba(244, 200, 108, 0.18);
-      padding: 18px 16px;
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.9);
-      font-size: 0.9rem;
-    }
-
-    .card-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      background: var(--gold-soft);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      margin-bottom: 8px;
-    }
-
-    .card-title {
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .card p {
-      font-size: 0.86rem;
-      color: var(--text-soft);
-    }
-
-    /* JORNADAS */
-
-    #jornadas {
-      background: radial-gradient(circle at bottom, rgba(69, 179, 255, 0.1), transparent 56%);
-    }
-
-    .journeys {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .journey {
-      background: rgba(8, 9, 18, 0.98);
-      border-radius: 18px;
-      border: 1px solid rgba(69, 179, 255, 0.4);
-      padding: 16px 14px;
-      font-size: 0.86rem;
-    }
-
-    .journey-tag {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 4px;
-    }
-
-    .journey h3 {
-      font-size: 0.96rem;
-      margin-bottom: 6px;
-    }
-
-    .journey ul {
-      margin-top: 6px;
-      list-style: none;
-      padding-left: 0;
-      color: var(--text-soft);
-    }
-
-    .journey ul li {
-      margin-bottom: 4px;
-      display: flex;
-      align-items: flex-start;
-      gap: 5px;
-    }
-
-    .journey ul li::before {
-      content: "•";
-      color: var(--accent);
-      font-size: 0.8rem;
-      margin-top: 1px;
-    }
-
-    /* PLANOS */
-
-    #planos {
-      background: #05060a;
-      border-top: 1px solid rgba(244, 200, 108, 0.25);
-      border-bottom: 1px solid rgba(244, 200, 108, 0.2);
-    }
-
-    .plans-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 14px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-    }
-
-    .billing-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(244, 200, 108, 0.3);
-      background: rgba(8, 9, 18, 0.98);
-      padding: 4px;
-      font-size: 0.78rem;
-    }
-
-    .billing-toggle button {
-      border: none;
-      background: transparent;
-      padding: 6px 10px;
-      border-radius: 999px;
-      color: var(--text-soft);
-      cursor: pointer;
-      font-size: 0.78rem;
-    }
-
-    .billing-toggle button.active {
-      background: rgba(244, 200, 108, 0.2);
-      color: var(--gold);
-      font-weight: 600;
-    }
-
-    .plans-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .plan {
-      background: rgba(8, 9, 18, 0.98);
-      border-radius: 22px;
-      border: 1px solid rgba(244, 200, 108, 0.18);
-      padding: 18px 16px 16px;
-      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.95);
-      position: relative;
-    }
-
-    .plan.highlight {
-      border-color: rgba(244, 200, 108, 0.7);
-      box-shadow: 0 20px 46px rgba(244, 200, 108, 0.5);
-      transform: translateY(-2px);
-    }
-
-    .plan-tag {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      font-size: 0.7rem;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(244, 200, 108, 0.16);
-      color: var(--gold);
-      border: 1px solid rgba(244, 200, 108, 0.6);
-    }
-
-    .plan-name {
-      font-size: 0.96rem;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .plan-desc {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-      margin-bottom: 10px;
-    }
-
-    .plan-price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-      margin-bottom: 10px;
-    }
-
-    .plan-price {
-      font-size: 1.35rem;
-      font-weight: 700;
-    }
-
-    .plan-price small {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-    }
-
-    .plan-list {
-      list-style: none;
-      padding-left: 0;
-      margin: 10px 0 14px;
-      font-size: 0.8rem;
-      color: var(--text-soft);
-    }
-
-    .plan-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-      margin-bottom: 6px;
-    }
-
-    .plan-list li::before {
-      content: "✓";
-      color: var(--success);
-      font-size: 0.75rem;
-      margin-top: 2px;
-    }
-
-    .plan-footnote {
-      font-size: 0.7rem;
-      color: var(--text-soft);
-      margin-top: 8px;
-    }
-
-    .plan button {
-      width: 100%;
-      margin-top: 4px;
-    }
-
-    /* CTA FINAL */
-
-    #cta-final {
-      background: #05060a;
-      padding-top: 30px;
-      padding-bottom: 40px;
-    }
-
-    .cta-box {
-      border-radius: 22px;
-      border: 1px solid rgba(244, 200, 108, 0.5);
-      background:
-        radial-gradient(circle at top, rgba(244, 200, 108, 0.25), transparent 58%),
-        linear-gradient(145deg, #05060a, #090b18);
-      padding: 20px 18px;
-      text-align: center;
-      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.9);
-    }
-
-    .cta-box h2 {
-      font-size: 1.4rem;
-      margin-bottom: 8px;
-    }
-
-    .cta-box p {
-      font-size: 0.9rem;
-      color: var(--text-soft);
       margin-bottom: 14px;
     }
 
-    .cta-small {
-      font-size: 0.72rem;
-      color: var(--text-soft);
-      margin-top: 6px;
-    }
-
-    /* FOOTER */
-
-    footer {
-      background: #03040a;
-      border-top: 1px solid rgba(244, 200, 108, 0.18);
-      padding: 18px;
-      font-size: 0.78rem;
-      color: var(--text-soft);
-    }
-
-    .footer-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
+    .brand {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      justify-content: space-between;
       gap: 10px;
     }
 
-    .footer-tags {
+    .brand-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 20%, #ffffff 0, #facc6b 10%, #c49b3f 45%, #0b0a0f 100%);
+      box-shadow:
+        0 0 0 2px rgba(0, 0, 0, 0.8),
+        0 0 18px rgba(250, 204, 107, 0.7);
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .brand-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .badge-cv {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(16, 185, 129, 0.7);
+      background: radial-gradient(circle at top, rgba(16, 185, 129, 0.2), rgba(3, 7, 18, 0.95));
+      font-size: 0.7rem;
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      min-width: 120px;
+    }
+
+    .badge-cv-main {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .badge-cv-label {
+      color: var(--emerald-soft);
+      font-weight: 600;
+      font-size: 0.72rem;
+    }
+
+    .badge-cv-value {
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .badge-cv-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .header-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      border: 1px solid rgba(250, 204, 107, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: var(--gold);
+      background: radial-gradient(circle at top, #020617, #020309);
+      cursor: pointer;
+    }
+
+    /* TELAS */
+    main.app-screen {
+      display: none;
+    }
+
+    main.app-screen.active {
+      display: block;
+      animation: fadeIn 0.35s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(6px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    /* BOTÕES */
+    .btn-primary {
+      border-radius: 999px;
+      border: none;
+      padding: 10px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, var(--emerald-soft), var(--emerald));
+      color: #041016;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(16, 185, 129, 0.55);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-secondary {
+      border-radius: 999px;
+      padding: 10px 14px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(7, 11, 19, 0.96);
+      color: var(--text-soft);
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .btn-outline-gold {
+      border-radius: 999px;
+      padding: 9px 13px;
+      border: 1px solid rgba(250, 204, 107, 0.8);
+      background: rgba(7, 8, 13, 0.92);
+      color: var(--gold);
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    .btn-small {
+      border-radius: 999px;
+      padding: 7px 11px;
+      border: none;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      background: linear-gradient(135deg, #4b5563, #111827);
+      color: var(--text-soft);
+    }
+
+    /* HOME */
+    .card-hero {
+      background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.12), rgba(11, 15, 25, 0.98));
+      border-radius: var(--radius-xl);
+      padding: 18px 16px 18px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 14px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 11px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--emerald-soft), var(--gold));
+      color: #020617;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: 1.45rem;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .hero-title span {
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      margin-bottom: 12px;
+    }
+
+    .hero-sub span {
+      color: var(--emerald-soft);
+      font-weight: 600;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    .hero-tags span {
+      font-size: 0.75rem;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--text-soft);
+      background: rgba(10, 14, 22, 0.95);
+    }
+
+    .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
     }
 
-    .footer-chip {
-      padding: 4px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(244, 200, 108, 0.28);
-      background: rgba(7, 8, 16, 0.96);
-    }
-
-    /* RESPONSIVO */
-
-    @media (max-width: 960px) {
-      .hero {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .chat-shell {
-        order: -1;
-      }
-      .nav-links {
-        display: none;
-      }
+    .home-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 10px;
     }
 
     @media (max-width: 720px) {
-      section {
-        padding-inline: 14px;
+      .home-grid {
+        grid-template-columns: 1fr;
       }
-      .grid-3,
-      .journeys,
-      .plans-grid {
-        grid-template-columns: minmax(0, 1fr);
-      }
-      .journeys {
-        gap: 14px;
-      }
+    }
+
+    .home-card {
+      background: linear-gradient(150deg, rgba(15, 23, 42, 0.98), rgba(4, 7, 15, 0.98));
+      border-radius: 18px;
+      border: 1px solid rgba(30, 64, 175, 0.5);
+      padding: 12px 11px;
+    }
+
+    .home-card h3 {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .home-card p {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 7px;
+    }
+
+    .home-bullets {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      list-style: none;
+    }
+
+    .home-bullets li {
+      margin-bottom: 3px;
+    }
+
+    .home-bullets li::before {
+      content: "• ";
+      color: var(--gold);
+    }
+
+    /* FORJA 30X */
+    .forge-card {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(5, 7, 14, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-soft);
+      padding: 14px 12px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-title {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .section-sub {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 10px;
+    }
+
+    .forge-step-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    .forge-step {
+      background: radial-gradient(circle at top left, rgba(250, 204, 107, 0.06), rgba(8, 11, 20, 0.98));
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 10px 9px;
+      font-size: 0.8rem;
+    }
+
+    .forge-step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+      gap: 6px;
+    }
+
+    .forge-step-title {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .forge-step-tag {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: var(--text-soft);
+    }
+
+    .forge-step textarea,
+    .forge-step input {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      background: rgba(5, 7, 15, 0.96);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      padding: 7px 8px;
+      resize: none;
+      margin-top: 6px;
+    }
+
+    .forge-step textarea::placeholder,
+    .forge-step input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .forge-footer {
+      margin-top: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .forge-note {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .forge-note span {
+      color: var(--emerald-soft);
+    }
+
+    /* ANALYTICS */
+    .analytics-card {
+      background: linear-gradient(150deg, rgba(4, 7, 15, 0.98), #020309);
+      border-radius: var(--radius-xl);
+      padding: 14px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .analytics-graph {
+      margin-top: 8px;
+      margin-bottom: 10px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #020617, #020309);
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      padding: 8px 8px 10px;
+    }
+
+    .graph-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .graph-line {
+      position: relative;
+      height: 80px;
+      border-radius: 12px;
+      background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.15), rgba(15, 23, 42, 0.9));
+      overflow: hidden;
+    }
+
+    .graph-line::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(0deg, rgba(15, 23, 42, 0.85) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.8) 1px, transparent 1px);
+      background-size: 100% 20px, 32px 100%;
+      opacity: 0.5;
+    }
+
+    .graph-curve {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(220, 38, 38, 0.0), rgba(220, 38, 38, 0.4), rgba(16, 185, 129, 0.8));
+      clip-path: polygon(
+        0% 70%,
+        10% 75%,
+        20% 50%,
+        30% 60%,
+        40% 40%,
+        50% 45%,
+        60% 30%,
+        70% 40%,
+        80% 25%,
+        90% 35%,
+        100% 20%,
+        100% 100%,
+        0% 100%
+      );
+      opacity: 0.95;
+    }
+
+    .analytics-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 0.78rem;
+    }
+
+    .kpi-card {
+      background: rgba(10, 14, 23, 0.96);
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      padding: 6px 7px;
+    }
+
+    .kpi-label {
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+
+    .kpi-value {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .kpi-tag {
+      font-size: 0.7rem;
+      color: var(--emerald-soft);
+    }
+
+    /* BLUEPRINT */
+    .blueprint-card {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(5, 7, 16, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-soft);
+      padding: 14px 12px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .bp-section-title {
+      font-size: 0.86rem;
+      margin-bottom: 4px;
+      color: var(--gold);
+    }
+
+    .bp-list {
+      margin-top: 4px;
+    }
+
+    .bp-item {
+      padding: 7px 8px;
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: rgba(6, 9, 18, 0.96);
+      font-size: 0.8rem;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .bp-item.locked {
+      opacity: 0.6;
+    }
+
+    .bp-tag {
+      font-size: 0.7rem;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      color: var(--text-soft);
+    }
+
+    .bp-tag.vip {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* FOCO */
+    .focus-card {
+      background: linear-gradient(150deg, rgba(8, 47, 73, 0.9), rgba(3, 7, 18, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(56, 189, 248, 0.7);
+      padding: 14px 12px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .focus-timer {
+      margin-top: 8px;
+      margin-bottom: 10px;
+      border-radius: 16px;
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      padding: 10px;
+      text-align: center;
+    }
+
+    .focus-time {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      margin-bottom: 4px;
+    }
+
+    .focus-label {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .focus-buttons {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .focus-note {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* PERFIL / ASSINATURA */
+    .profile-card {
+      background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(5, 7, 16, 0.98));
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-soft);
+      padding: 14px 12px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .profile-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .profile-avatar-big {
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 20%, #ffffff 0, #facc6b 10%, #c49b3f 45%, #0b0a10 100%);
+      border: 1px solid rgba(250, 204, 107, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: #161616;
+    }
+
+    .profile-main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .profile-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .profile-email {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-bottom: 3px;
+    }
+
+    .profile-plan-chip {
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(16, 185, 129, 0.7);
+      color: var(--emerald-soft);
+      width: fit-content;
+    }
+
+    .profile-lines {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .profile-lines div {
+      margin-bottom: 3px;
+    }
+
+    .profile-btn-row {
+      margin-top: 8px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .plans-mini {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .plans-mini strong {
+      color: var(--gold);
+    }
+
+    /* NAV INFERIOR */
+    nav.bottom-nav {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 8px 10px 14px;
+      background: radial-gradient(circle at top, rgba(5, 7, 12, 0.98), #020309 70%);
+      border-top: 1px solid rgba(148, 163, 184, 0.3);
+      backdrop-filter: blur(16px);
+      z-index: 30;
+    }
+
+    .bottom-nav-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 4px;
+    }
+
+    .nav-item {
+      flex: 1;
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .nav-item span.icon {
+      display: block;
+      font-size: 1.1rem;
+      margin-bottom: 2px;
+    }
+
+    .nav-item.active {
+      color: var(--emerald-soft);
+      font-weight: 600;
+    }
+
+    .nav-item.active span.icon {
+      filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.9));
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <!-- NAVBAR -->
-    <header>
-      <nav class="nav">
-        <div class="logo">
-          <div class="logo-mark"></div>
-          <span>BILLIONMIND</span><span>AI</span>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <div class="brand-text">
+          <div class="brand-title">BILLIONMIND</div>
+          <div class="brand-sub">Acelerador de Disciplina · Edição Completa</div>
         </div>
-        <div class="nav-links">
-          <a href="#inicio">Início</a>
-          <a href="#como-funciona">Como funciona</a>
-          <a href="#jornadas">Jornadas</a>
-          <a href="#planos">Planos</a>
+      </div>
+      <div class="header-actions">
+        <div class="badge-cv">
+          <div class="badge-cv-main">
+            <span class="badge-cv-label">Capital de Vida</span>
+            <span class="badge-cv-value" id="cvValue">0</span>
+          </div>
+          <div class="badge-cv-sub" id="cvLevelLabel">Nível: Visionário</div>
         </div>
-        <div class="nav-cta">
-          <button class="btn btn-outline" onclick="scrollToSection('planos')">Entrar</button>
-          <button class="btn btn-gold" onclick="scrollToSection('planos')">Começar agora</button>
+        <div class="header-avatar" id="headerAvatar">
+          BB
         </div>
-      </nav>
+      </div>
     </header>
 
-    <main>
-      <!-- HERO + CHAT -->
-      <section id="inicio">
-        <div class="container hero">
-          <div>
-            <div class="pill-top">
-              <div class="pill-dot"><span></span></div>
-              <span>Seu chat de alta performance, estilo de vida e disciplina.</span>
-            </div>
-            <h1 class="hero-title">
-              Transforme sua mente em uma <span>BillionMind</span>:
-              disciplina, luxo e liberdade em um único chat.
-            </h1>
-            <p class="hero-subtitle">
-              BillionMind AI é um assistente de alta performance criado para qualquer pessoa
-              que queira organizar rotina, riqueza, hábitos e mentalidade em uma experiência
-              simples de chat, direto no navegador.
-            </p>
-
-            <div class="hero-bullets">
-              <span>Rotinas diárias prontas para executar.</span>
-              <span>Mensagens motivacionais personalizadas.</span>
-              <span>Geração de imagens de lifestyle e riqueza via IA.</span>
-            </div>
-
-            <div class="hero-cta-row">
-              <button class="btn btn-gold" onclick="scrollToSection('planos')">
-                Criar minha conta PRO
-              </button>
-              <button class="btn btn-outline" onclick="scrollToSection('como-funciona')">
-                Ver como funciona
-              </button>
-            </div>
-            <p class="hero-note">
-              <strong>Página única, uso global.</strong> Basta abrir, escrever e deixar a IA
-              guiar sua rotina de disciplina, dinheiro e lifestyle – sem menus confusos.
-            </p>
-          </div>
-
-          <!-- Chat / Painel -->
-          <div class="chat-shell">
-            <div class="chat-header">
-              <div class="chat-header-left">
-                <div class="chat-status-dot"></div>
-                <div>
-                  <div style="font-size:0.8rem;font-weight:600;">Sessão BillionMind · Ativa</div>
-                  <div style="font-size:0.7rem;color:var(--text-soft);">
-                    Foco: rotina, metas e mentalidade hoje.
-                  </div>
-                </div>
-              </div>
-              <div class="chat-header-right">
-                <span>Modo</span>
-                <span class="chip-small">Alta performance</span>
-              </div>
-            </div>
-
-            <div class="chat-meta">
-              <div class="meta-card">
-                <div class="meta-label">Meta principal de hoje</div>
-                <div class="meta-value gold">Trabalhar 90 min em um objetivo importante.</div>
-                <div class="meta-badges">
-                  <span class="meta-badge">Disciplina</span>
-                  <span class="meta-badge">Renda extra</span>
-                </div>
-              </div>
-              <div class="meta-card">
-                <div class="meta-label">Sequência de dias disciplinados</div>
-                <div class="meta-value green">12 dias seguidos</div>
-                <div class="meta-label">Você está construindo consistência.</div>
-              </div>
-            </div>
-
-            <div class="chat-window" id="chatWindow">
-              <div class="msg msg-system">
-                BillionMind AI: escreva seu objetivo e eu organizo em passos diários, tarefas,
-                frases de foco e ideias de imagens para você visualizar e postar.
-              </div>
-              <div class="msg msg-user">
-                Quero organizar minha vida para ter disciplina, rotina e dinheiro, sem perder
-                meu estilo de vida.
-              </div>
-              <div class="msg msg-ai">
-                Excelente objetivo. Vamos montar sua base de alta performance:<br /><br />
-                <strong>• Pilar 1 — Rotina diária:</strong> blocos de foco, descanso e tempo
-                livre com horário definido.<br />
-                <strong>• Pilar 2 — Renda:</strong> 1 ação de dinheiro por dia que você pode
-                executar mesmo cansado.<br />
-                <strong>• Pilar 3 — Mentalidade:</strong> frases, perguntas e reflexões para
-                pensar como dono, não como vítima.<br /><br />
-                A partir daqui, cada mensagem sua vira um plano prático para aplicar hoje.
-              </div>
-            </div>
-
-            <div class="quick-actions">
-              <div class="quick-chip" onclick="quickPrompt('Crie uma rotina de disciplina de 30 dias para mim.')">
-                <span>●</span> Rotina 30 dias
-              </div>
-              <div class="quick-chip" onclick="quickPrompt('Gere 5 frases de motivação em estilo de luxo para hoje.')">
-                <span>●</span> Frases motivacionais
-              </div>
-              <div class="quick-chip" onclick="quickPrompt('Descreva 3 ideias de imagens de riqueza e liberdade para eu criar via IA.')">
-                <span>●</span> Ideias de imagens
-              </div>
-              <div class="quick-chip" onclick="quickPrompt('Liste minhas 3 prioridades financeiras da semana.')">
-                <span>●</span> Prioridades da semana
-              </div>
-            </div>
-
-            <div class="chat-input-row">
-              <input
-                id="chatInput"
-                class="chat-input"
-                type="text"
-                placeholder="Digite sua próxima meta, dúvida ou pedido (ex: ‘quero rotina para acordar 5h’)..."
-              />
-              <button class="chat-send" onclick="fakeSend()">➤</button>
-            </div>
-          </div>
+    <!-- HOME -->
+    <main id="screen-home" class="app-screen active">
+      <section class="card-hero">
+        <div class="hero-pill">
+          <span>⚡</span> Acelerador de Disciplina · 30 dias
+        </div>
+        <h1 class="hero-title">
+          Transforme disciplina em <span>patrimônio de alta performance</span>.
+        </h1>
+        <p class="hero-sub">
+          O BillionMind AI não te dá frases vazias. Ele converte <span>ação diária</span>
+          em <span>Capital de Vida (CV)</span>, nível de poder e status dentro do seu próprio sistema.
+        </p>
+        <div class="hero-tags">
+          <span>CV Analytics em tempo real</span>
+          <span>Forja da Disciplina 30X</span>
+          <span>Billionaire Blueprint</span>
+          <span>Protocolos de Foco & KPIs</span>
+        </div>
+        <div class="hero-actions">
+          <button class="btn-primary" data-nav="screen-forge">
+            🔥 Iniciar Forja da Disciplina 30X
+          </button>
+          <button class="btn-secondary" data-nav="screen-analytics">
+            📈 Ver meu painel CV Analytics
+          </button>
         </div>
       </section>
 
-      <!-- COMO FUNCIONA -->
-      <section id="como-funciona">
-        <div class="container">
-          <h2 class="section-title">Como BillionMind AI funciona na prática.</h2>
-          <p class="section-subtitle">
-            O app foi projetado para qualquer pessoa no mundo: você abre, escreve o que quer
-            mudar e o chat monta rotinas, tarefas, frases e imagens para apoiar sua nova
-            mentalidade – tudo em uma única página.
+      <div class="home-grid">
+        <div class="home-card">
+          <h3>Como o Capital de Vida funciona</h3>
+          <p>
+            Seu CV sobe quando você cumpre os Protocolos Diários e desce quando você foge deles.
+            É sua “bolsa de valores” da disciplina.
           </p>
-
-          <div class="grid-3">
-            <div class="card">
-              <div class="card-icon">💬</div>
-              <div class="card-title">Chat de alta performance</div>
-              <p>
-                Você conversa com a IA como se estivesse falando com um mentor: fala da sua
-                rotina, da sua vida e dos seus objetivos, e recebe respostas diretas, práticas e
-                aplicáveis no mesmo dia.
-              </p>
-            </div>
-            <div class="card">
-              <div class="card-icon">📆</div>
-              <div class="card-title">Planos diários e tarefas</div>
-              <p>
-                O app cria planos estruturados de 7, 21 ou 30 dias com tarefas diárias, metas
-                de foco e checagens simples para você seguir sem se perder no excesso de
-                informação.
-              </p>
-            </div>
-            <div class="card">
-              <div class="card-icon">🖼️</div>
-              <div class="card-title">Imagens de lifestyle via IA</div>
-              <p>
-                Você pede e a IA sugere prompts de imagens de carros, cidades, viagens,
-                escritórios e cenas de luxo para você gerar em qualquer gerador de imagem e
-                usar como motivação ou postagem.
-              </p>
-            </div>
-          </div>
+          <ul class="home-bullets">
+            <li>Complete o desafio do dia para ganhar CV.</li>
+            <li>Mantenha constância para subir de nível (Visionário → VIP).</li>
+            <li>Use o CV Analytics para ver se você está em ascensão ou queda.</li>
+          </ul>
         </div>
-      </section>
-
-      <!-- JORNADAS -->
-      <section id="jornadas">
-        <div class="container">
-          <h2 class="section-title">Jornadas guiadas que qualquer pessoa pode seguir.</h2>
-          <p class="section-subtitle">
-            Em vez de só responder perguntas, BillionMind AI organiza sua evolução em
-            “caminhos” claros. Você escolhe a jornada e o chat mostra o que fazer hoje, amanhã e
-            nas próximas semanas.
+        <div class="home-card">
+          <h3>Planos e status</h3>
+          <p>
+            Gratuito para começar. Elite e VIP para quem quer jogar o jogo completo.
           </p>
-
-          <div class="journeys">
-            <div class="journey">
-              <div class="journey-tag">Jornada 01</div>
-              <h3>30 dias de disciplina absoluta</h3>
-              <p>
-                Foco em construir consistência. Ideal para quem sente que sempre começa e
-                para.
-              </p>
-              <ul>
-                <li>Despertar com propósito e horários definidos.</li>
-                <li>Blocos de foco para trabalho, estudo ou projeto.</li>
-                <li>Rituais noturnos para encerrar o dia com consciência.</li>
-              </ul>
-            </div>
-
-            <div class="journey">
-              <div class="journey-tag">Jornada 02</div>
-              <h3>Renda extra e mentalidade de dono</h3>
-              <p>
-                Direcionada para quem quer sair do “só sobreviver” e começar a construir renda
-                a partir do que já sabe.
-              </p>
-              <ul>
-                <li>Mapeamento de habilidades e oportunidades.</li>
-                <li>Uma ação de dinheiro por dia (simples e objetiva).</li>
-                <li>Revisão semanal de ganhos, erros e ajustes.</li>
-              </ul>
-            </div>
-
-            <div class="journey">
-              <div class="journey-tag">Jornada 03</div>
-              <h3>Lifestyle de luxo consciente</h3>
-              <p>
-                Para quem gosta de carro, viagem, roupa e cidade bonita, mas quer fazer isso com
-                estrutura e responsabilidade.
-              </p>
-              <ul>
-                <li>Planejamento de metas de lifestyle (viagem, carro, casa).</li>
-                <li>Conexão entre imagem, trabalho e disciplina.</li>
-                <li>Prompts de imagens para visualizar sua vida futura.</li>
-              </ul>
-            </div>
-          </div>
+          <ul class="home-bullets">
+            <li>Visionário: modo teste, 5 dias de protocolo.</li>
+            <li>Elite: protocolos ilimitados + KPIs avançados.</li>
+            <li>VIP: tudo desbloqueado + conteúdo exclusivo.</li>
+          </ul>
         </div>
-      </section>
+      </div>
+    </main>
 
-      <!-- PLANOS -->
-      <section id="planos">
-        <div class="container">
-          <div class="plans-header">
-            <div>
-              <h2 class="section-title">Planos simples para qualquer realidade.</h2>
-              <p class="section-subtitle">
-                Escolha se quer experimentar gratuitamente ou destravar todo o poder da
-                BillionMind AI com acesso PRO e ELITE. Você pode mudar ou cancelar o plano a
-                qualquer momento.
-              </p>
-            </div>
-            <div>
-              <div class="billing-toggle">
-                <button class="active" type="button">Mensal</button>
-                <button type="button" disabled style="opacity:0.4;cursor:not-allowed;">
-                  Anual em breve
-                </button>
-              </div>
-              <div style="font-size:0.7rem;color:var(--text-soft);margin-top:6px;">
-                Pagamento 100% online, com acesso imediato após a confirmação.
-              </div>
-            </div>
-          </div>
+    <!-- FORJA DA DISCIPLINA 30X -->
+    <main id="screen-forge" class="app-screen">
+      <section class="forge-card">
+        <h2 class="section-title">Forja da Disciplina 30X</h2>
+        <p class="section-sub">
+          Todo dia, um protocolo. Você tem 24h para executar o plano do dia. Ao concluir, seu CV sobe.
+        </p>
 
-          <div class="plans-grid">
-            <div class="plan">
-              <div class="plan-name">FREE · Começar hoje</div>
-              <div class="plan-desc">
-                Para qualquer pessoa dar o primeiro passo sem pagar nada.
-              </div>
-              <div class="plan-price-row">
-                <div class="plan-price">R$ 0</div>
-                <small>/ mês</small>
-              </div>
-              <ul class="plan-list">
-                <li>Acesso ao chat com respostas básicas.</li>
-                <li>1 jornada liberada (30 dias de disciplina).</li>
-                <li>Ideias limitadas de prompts para imagens.</li>
-                <li>Resumo semanal simples de progresso.</li>
-              </ul>
-              <button class="btn btn-outline" onclick="openCheckout('FREE')">
-                Começar de graça
-              </button>
-              <div class="plan-footnote">
-                Ideal para testar a experiência e sentir a mudança na prática.
-              </div>
+        <div class="forge-step-grid">
+          <div class="forge-step">
+            <div class="forge-step-header">
+              <div class="forge-step-title">1. Dose VIP (Mentoria do Dia)</div>
+              <div class="forge-step-tag">Mentalidade</div>
             </div>
-
-            <div class="plan highlight">
-              <div class="plan-tag">Recomendado</div>
-              <div class="plan-name">PRO · Rotina e Renda</div>
-              <div class="plan-desc">
-                Para quem quer viver na prática o que a BillionMind AI sugere todos os dias.
-              </div>
-              <div class="plan-price-row">
-                <div class="plan-price">R$ 49</div>
-                <small>/ mês</small>
-              </div>
-              <ul class="plan-list">
-                <li>Acesso completo ao chat de alta performance.</li>
-                <li>Jornadas completas de disciplina, renda e lifestyle.</li>
-                <li>Rotinas personalizadas a partir da sua realidade.</li>
-                <li>Mais prompts e ideias de imagens de luxo via IA.</li>
-                <li>Exportar planos em PDF ou copiar para notas.</li>
-              </ul>
-              <button class="btn btn-gold" onclick="openCheckout('PRO')">
-                Assinar plano PRO
-              </button>
-              <div class="plan-footnote">
-                Plano ideal para quem quer resultado real com investimento acessível.
-              </div>
-            </div>
-
-            <div class="plan">
-              <div class="plan-name">ELITE · Jogo grande</div>
-              <div class="plan-desc">
-                Para quem leva disciplina, dinheiro e lifestyle como projeto de vida.
-              </div>
-              <div class="plan-price-row">
-                <div class="plan-price">R$ 99</div>
-                <small>/ mês</small>
-              </div>
-              <ul class="plan-list">
-                <li>Tudo do PRO incluso.</li>
-                <li>Limite ainda maior de planos e jornadas ativas.</li>
-                <li>Mais ideias de imagens por semana.</li>
-                <li>Espaço para planejar projetos grandes (negócios, viagens, etc.).</li>
-                <li>Prioridade máxima em suporte e novidades.</li>
-              </ul>
-              <button class="btn btn-outline" onclick="openCheckout('ELITE')">
-                Subir para o ELITE
-              </button>
-              <div class="plan-footnote">
-                Para quem decidiu construir uma vida em nível bilionário de visão e disciplina.
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- CTA FINAL -->
-      <section id="cta-final">
-        <div class="container">
-          <div class="cta-box">
-            <h2>Pronto para viver com mente disciplinada e visão de luxo?</h2>
             <p>
-              BillionMind AI foi criada para ser seu parceiro diário de foco, dinheiro e
-              lifestyle. Em poucos minutos por dia você organiza metas, tarefas e imagens da
-              vida que quer viver – e começa a caminhar na direção delas.
+              Hoje seu foco é <strong>agir como alguém que já vive o lifestyle que deseja</strong>.
+              Durante 1 bloco de foco, trabalhe como se alguém estivesse auditando sua disciplina.
             </p>
-            <button class="btn btn-gold" onclick="scrollToSection('planos')">
-              Escolher meu plano e começar
-            </button>
-            <div class="cta-small">
-              Assim que seu plano for ativado, você já pode usar o chat para montar sua rotina
-              de hoje e iniciar a próxima jornada.
-            </div>
           </div>
+
+          <div class="forge-step">
+            <div class="forge-step-header">
+              <div class="forge-step-title">2. Protocolo de Ação</div>
+              <div class="forge-step-tag">Execução</div>
+            </div>
+            <p>Defina uma ação clara e mensurável para hoje:</p>
+            <textarea id="forgeTask" rows="3"
+              placeholder="Ex: 60 minutos de Deep Work montando meu plano de receita das próximas 4 semanas..."></textarea>
+          </div>
+
+          <div class="forge-step">
+            <div class="forge-step-header">
+              <div class="forge-step-title">3. Relatório de Execução</div>
+              <div class="forge-step-tag">Métricas</div>
+            </div>
+            <p>Registre como você foi na prática:</p>
+            <input id="forgeTime" placeholder="Tempo dedicado (ex: 65 minutos)" />
+            <input id="forgeQuality" placeholder="Qualidade da execução (0 a 10)" />
+          </div>
+        </div>
+
+        <div class="forge-footer">
+          <button class="btn-primary" id="btnConcluirDia">
+            ✅ Concluir protocolo de hoje e ganhar CV
+          </button>
+          <p class="forge-note" id="forgeNote">
+            Ao concluir o protocolo de hoje você ganhará <span>+120 de CV</span>.
+            Uma vez por dia, sem repetição.
+          </p>
         </div>
       </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer>
-      <div class="footer-inner">
-        <div>© <span id="year"></span> BillionMind AI. Todos os direitos reservados.</div>
-        <div class="footer-tags">
-          <div class="footer-chip">Feito para criadores e pessoas comuns.</div>
-          <div class="footer-chip">Uso global · Página única · Alta performance.</div>
+    <!-- CV ANALYTICS -->
+    <main id="screen-analytics" class="app-screen">
+      <section class="analytics-card">
+        <h2 class="section-title">CV Analytics · Painel de Alta Performance</h2>
+        <p class="section-sub">
+          Veja seu Capital de Vida como se fosse uma carteira de investimentos. Alta disciplina, alta valorização.
+        </p>
+
+        <div class="analytics-graph">
+          <div class="graph-header">
+            <span id="graphStatus">CV em ascensão</span>
+            <span id="graphCvLabel">CV atual: 0</span>
+          </div>
+          <div class="graph-line">
+            <div class="graph-curve"></div>
+          </div>
         </div>
-      </div>
-    </footer>
+
+        <div class="analytics-kpis">
+          <div class="kpi-card">
+            <div class="kpi-label">Horas de Foco (24h)</div>
+            <div class="kpi-value" id="kpiFocus">0.0 h</div>
+            <div class="kpi-tag">Alvo: 3.0 h</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Rendimento (Semana)</div>
+            <div class="kpi-value" id="kpiRevenue">R$ 0</div>
+            <div class="kpi-tag">Meta: R$ 1.000</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Disciplina Física</div>
+            <div class="kpi-value" id="kpiTraining">0 sessões</div>
+            <div class="kpi-tag">Meta: 4/semana</div>
+          </div>
+        </div>
+
+        <p class="forge-note" style="margin-top:10px;">
+          Em breve: conecte seus KPIs reais (tempo de estudo, vendas, treino) e veja o impacto direto no seu CV.
+        </p>
+      </section>
+    </main>
+
+    <!-- BLUEPRINT -->
+    <main id="screen-blueprint" class="app-screen">
+      <section class="blueprint-card">
+        <h2 class="section-title">Billionaire Blueprint · Cofre de Conhecimento</h2>
+        <p class="section-sub">
+          Módulos curtos, diretos ao ponto. Cada módulo concluído com quiz aumenta seu Capital de Vida.
+        </p>
+
+        <div class="bp-list">
+          <div class="bp-section-title">Foco & Disciplina</div>
+          <div class="bp-item">
+            <span>Fundamentos da Disciplina Implacável</span>
+            <span class="bp-tag">Introdução · Free</span>
+          </div>
+          <div class="bp-item">
+            <span>Arquitetando seus 30 dias de alta performance</span>
+            <span class="bp-tag">Elite</span>
+          </div>
+          <div class="bp-item locked">
+            <span>Rotina de Bilionário: como blindar sua mente</span>
+            <span class="bp-tag vip">VIP</span>
+          </div>
+
+          <div class="bp-section-title" style="margin-top:8px;">Finanças & Riqueza</div>
+          <div class="bp-item">
+            <span>Do zero ao primeiro fluxo de renda extra</span>
+            <span class="bp-tag">Elite</span>
+          </div>
+          <div class="bp-item locked">
+            <span>Estrutura mental de quem fatura alto no digital</span>
+            <span class="bp-tag vip">VIP</span>
+          </div>
+
+          <div class="bp-section-title" style="margin-top:8px;">Longevidade & Performance Física</div>
+          <div class="bp-item">
+            <span>Disciplina física mínima para alta performance</span>
+            <span class="bp-tag">Free</span>
+          </div>
+          <div class="bp-item locked">
+            <span>Protocolo Avançado de Energia Diária</span>
+            <span class="bp-tag vip">VIP</span>
+          </div>
+        </div>
+
+        <p class="forge-note" style="margin-top:8px;">
+          Em breve: quizzes, desbloqueio de CV e trilhas completas serão conectados ao seu perfil real.
+        </p>
+      </section>
+    </main>
+
+    <!-- FOCO -->
+    <main id="screen-focus" class="app-screen">
+      <section class="focus-card">
+        <h2 class="section-title">Protocolo de Foco · Pomodoro High Performance</h2>
+        <p class="section-sub">
+          Use blocos de 25 minutos como se cada um valesse R$ 10.000,00 em construção de vida.
+        </p>
+
+        <div class="focus-timer">
+          <div class="focus-time" id="focusTime">25:00</div>
+          <div class="focus-label" id="focusLabel">Pronto para iniciar o bloco de foco.</div>
+        </div>
+
+        <div class="focus-buttons">
+          <button class="btn-primary" id="btnStartFocus">▶ Iniciar</button>
+          <button class="btn-secondary" id="btnStopFocus">⏸ Pausar</button>
+          <button class="btn-small" id="btnResetFocus">↺ Resetar</button>
+        </div>
+
+        <p class="focus-note">
+          Na assinatura Elite e VIP, você desbloqueia trilhas sonoras exclusivas e o modo
+          <strong>"Foco Implacável"</strong>, que bloqueia distrações.
+        </p>
+      </section>
+    </main>
+
+    <!-- PERFIL / ASSINATURA -->
+    <main id="screen-profile" class="app-screen">
+      <section class="profile-card">
+        <div class="profile-row">
+          <div class="profile-avatar-big">BB</div>
+          <div class="profile-main">
+            <div class="profile-name" id="profileName">Bruno Brandão</div>
+            <div class="profile-email" id="profileEmail">email@exemplo.com</div>
+            <div class="profile-plan-chip" id="profilePlanChip">Plano atual: Visionário (Gratuito)</div>
+          </div>
+        </div>
+
+        <div class="profile-lines">
+          <div id="profileCvLine">Capital de Vida: 0 (Risco de oscilação alto)</div>
+          <div id="profileLevelLine">Status: Visionário · liberado para testar protocolos iniciais</div>
+        </div>
+
+        <div class="profile-btn-row">
+          <button class="profile-btn btn-small" id="btnSimularLogin">
+            Simular login com seu e-mail
+          </button>
+          <button class="profile-btn btn-small" id="btnSimularElite">
+            Simular plano Elite
+          </button>
+          <button class="profile-btn btn-small" id="btnSimularVip">
+            Simular plano VIP
+          </button>
+        </div>
+
+        <div class="plans-mini">
+          <p style="margin-top:8px;">
+            <strong>Assinatura Elite:</strong> protocolos ilimitados, 3 KPIs integrados e histórico de CV de 6 meses.
+          </p>
+          <p>
+            <strong>Assinatura VIP:</strong> tudo do Elite + conteúdo extra, comparativo com média da Elite
+            e sessões mensais de revisão.
+          </p>
+
+          <button class="btn-outline-gold" id="btnAssinarPro">
+            💳 Assinar via Stripe (PRO – exemplo)
+          </button>
+
+          <p class="forge-note" id="plansNote" style="margin-top:6px;">
+            Se sua rota /api/checkout estiver configurada, este botão abrirá o pagamento oficial da Stripe.
+          </p>
+        </div>
+      </section>
+    </main>
   </div>
 
+  <!-- NAV INFERIOR -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <div class="nav-item active" data-nav="screen-home">
+        <span class="icon">🏠</span>
+        Home
+      </div>
+      <div class="nav-item" data-nav="screen-forge">
+        <span class="icon">🔥</span>
+        Forja 30X
+      </div>
+      <div class="nav-item" data-nav="screen-analytics">
+        <span class="icon">📈</span>
+        CV
+      </div>
+      <div class="nav-item" data-nav="screen-blueprint">
+        <span class="icon">📚</span>
+        Blueprint
+      </div>
+      <div class="nav-item" data-nav="screen-focus">
+        <span class="icon">⏱</span>
+        Foco
+      </div>
+      <div class="nav-item" data-nav="screen-profile">
+        <span class="icon">👤</span>
+        Perfil
+      </div>
+    </div>
+  </nav>
+
   <script>
-    function scrollToSection(id) {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    // -------- Navegação entre telas --------
+    const navItems = document.querySelectorAll(".nav-item");
+    const screens = document.querySelectorAll(".app-screen");
+
+    navItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        const target = item.getAttribute("data-nav");
+        navItems.forEach((i) => i.classList.remove("active"));
+        item.classList.add("active");
+        screens.forEach((s) => {
+          s.classList.remove("active");
+          if (s.id === target) s.classList.add("active");
+        });
+      });
+    });
+
+    // -------- Capital de Vida (CV) --------
+    const cvValueEl = document.getElementById("cvValue");
+    const cvLevelLabel = document.getElementById("cvLevelLabel");
+    const graphStatus = document.getElementById("graphStatus");
+    const graphCvLabel = document.getElementById("graphCvLabel");
+    const profileCvLine = document.getElementById("profileCvLine");
+    const profileLevelLine = document.getElementById("profileLevelLine");
+
+    function getStoredCv() {
+      const v = parseInt(localStorage.getItem("bm_cv") || "0", 10);
+      return isNaN(v) ? 0 : v;
     }
 
-    function fakeSend() {
-      const input = document.getElementById("chatInput");
-      const chat = document.getElementById("chatWindow");
-      if (!input || !chat) return;
-      const text = input.value.trim();
-      if (!text) return;
-
-      // mensagem do usuário
-      const userMsg = document.createElement("div");
-      userMsg.className = "msg msg-user";
-      userMsg.textContent = text;
-      chat.appendChild(userMsg);
-
-      // resposta simples, pensada para usuário final
-      const aiMsg = document.createElement("div");
-      aiMsg.className = "msg msg-ai";
-      aiMsg.innerHTML =
-        "Entendido. Vamos transformar isso em ação:<br><br>" +
-        "<strong>1)</strong> Defina uma tarefa clara para os próximos 30 minutos ligada ao seu objetivo.<br>" +
-        "<strong>2)</strong> Elimine distrações até concluir essa tarefa.<br>" +
-        "<strong>3)</strong> Quando terminar, volte aqui e peça o próximo passo.<br><br>" +
-        "A mente BillionMind funciona assim: um passo de cada vez, todos os dias.";
-      chat.appendChild(aiMsg);
-
-      chat.scrollTop = chat.scrollHeight;
-      input.value = "";
+    function setStoredCv(v) {
+      localStorage.setItem("bm_cv", String(v));
     }
 
-    function quickPrompt(promptText) {
-      const input = document.getElementById("chatInput");
-      if (!input) return;
-      input.value = promptText;
-      input.focus();
+    function getCvLevel(cv) {
+      if (cv >= 5001) return "VIP";
+      if (cv >= 2001) return "Elite";
+      if (cv >= 501) return "Executor";
+      return "Visionário";
     }
 
-    function openCheckout(planName) {
-      // Troque o conteúdo deste alert pelos links reais de checkout quando estiver pronto.
-      alert(
-        "Você selecionou o plano: " +
-          planName +
-          ".\n\nNa versão completa, este botão leva para a página de pagamento ou área de login do seu plano."
-      );
+    function updateCvUi() {
+      const cv = getStoredCv();
+      cvValueEl.textContent = cv;
+      const level = getCvLevel(cv);
+      cvLevelLabel.textContent = "Nível: " + level;
+
+      graphCvLabel.textContent = "CV atual: " + cv;
+
+      if (cv === 0) {
+        graphStatus.textContent = "CV neutro · pronto para começar";
+      } else if (cv < 500) {
+        graphStatus.textContent = "CV em construção · risco de queda alto";
+      } else if (cv < 2000) {
+        graphStatus.textContent = "CV em ascensão · disciplina crescente";
+      } else if (cv < 5000) {
+        graphStatus.textContent = "Patrimônio mental consolidado em alta";
+      } else {
+        graphStatus.textContent = "Zona VIP · mantenha a disciplina implacável";
+      }
+
+      let risco = "Risco de oscilação alto";
+      if (cv >= 2000) risco = "Patrimônio mental em consolidação";
+      if (cv >= 5000) risco = "Risco de queda baixo · sua disciplina está cara";
+
+      profileCvLine.textContent = "Capital de Vida: " + cv + " (" + risco + ")";
+      profileLevelLine.textContent = "Status: " + level + " · seu acesso aumenta com o seu CV.";
     }
 
-    document.getElementById("year").textContent = new Date().getFullYear();
+    updateCvUi();
+
+    // -------- Forja: conclusão diária --------
+    const btnConcluirDia = document.getElementById("btnConcluirDia");
+    const forgeNote = document.getElementById("forgeNote");
+    const forgeTask = document.getElementById("forgeTask");
+    const forgeTime = document.getElementById("forgeTime");
+    const forgeQuality = document.getElementById("forgeQuality");
+
+    function hasCompletedToday() {
+      const todayStr = new Date().toISOString().slice(0, 10);
+      const last = localStorage.getItem("bm_last_forge");
+      return last === todayStr;
+    }
+
+    function setCompletedToday() {
+      const todayStr = new Date().toISOString().slice(0, 10);
+      localStorage.setItem("bm_last_forge", todayStr);
+    }
+
+    function updateForgeState() {
+      if (hasCompletedToday()) {
+        btnConcluirDia.disabled = true;
+        btnConcluirDia.textContent = "Protocolo de hoje já concluído";
+        forgeNote.innerHTML = "Você já ganhou <span>+120 de CV</span> hoje. Volte amanhã para manter sua linha em ascensão.";
+      }
+    }
+    updateForgeState();
+
+    btnConcluirDia.addEventListener("click", () => {
+      if (hasCompletedToday()) return;
+
+      const task = forgeTask.value.trim();
+      const t = forgeTime.value.trim();
+      const q = forgeQuality.value.trim();
+      if (!task || !t || !q) {
+        alert("Preencha os três campos antes de concluir o protocolo.");
+        return;
+      }
+
+      const currentCv = getStoredCv();
+      const newCv = currentCv + 120;
+      setStoredCv(newCv);
+      setCompletedToday();
+      updateCvUi();
+      updateForgeState();
+      alert("Protocolo concluído. Seu CV subiu para " + newCv + ".");
+    });
+
+    // -------- KPIs simples de exemplo --------
+    const kpiFocus = document.getElementById("kpiFocus");
+    const kpiRevenue = document.getElementById("kpiRevenue");
+    const kpiTraining = document.getElementById("kpiTraining");
+
+    // Só para visual: correlaciona KPIs com CV atual
+    function updateKpis() {
+      const cv = getStoredCv();
+      const foco = (cv / 400).toFixed(1); // ex: com 120 CV -> 0.3h
+      const receita = cv * 1.5; // só demonstrativo
+      const treino = Math.min(7, Math.floor(cv / 600)); // até 7 por semana
+
+      kpiFocus.textContent = foco + " h";
+      kpiRevenue.textContent = "R$ " + receita.toFixed(0);
+      kpiTraining.textContent = treino + " sessões";
+    }
+    updateKpis();
+
+    // -------- Foco (Pomodoro básico) --------
+    const focusTimeEl = document.getElementById("focusTime");
+    const focusLabelEl = document.getElementById("focusLabel");
+    const btnStartFocus = document.getElementById("btnStartFocus");
+    const btnStopFocus = document.getElementById("btnStopFocus");
+    const btnResetFocus = document.getElementById("btnResetFocus");
+
+    let focusSeconds = 25 * 60;
+    let focusTimer = null;
+
+    function renderFocusTime() {
+      const m = String(Math.floor(focusSeconds / 60)).padStart(2, "0");
+      const s = String(focusSeconds % 60).padStart(2, "0");
+      focusTimeEl.textContent = m + ":" + s;
+    }
+    renderFocusTime();
+
+    function stopFocusTimer() {
+      if (focusTimer) {
+        clearInterval(focusTimer);
+        focusTimer = null;
+      }
+    }
+
+    btnStartFocus.addEventListener("click", () => {
+      if (focusTimer) return;
+      focusLabelEl.textContent = "Bloco de foco em andamento. Não negocie esses minutos.";
+      focusTimer = setInterval(() => {
+        if (focusSeconds <= 0) {
+          stopFocusTimer();
+          focusLabelEl.textContent = "Bloco concluído. Seu CV merece um upgrade.";
+          // pequeno bônus simbólico
+          const newCv = getStoredCv() + 40;
+          setStoredCv(newCv);
+          updateCvUi();
+          updateKpis();
+          alert("Bloco de foco completo. Seu CV subiu para " + newCv + ".");
+          return;
+        }
+        focusSeconds--;
+        renderFocusTime();
+      }, 1000);
+    });
+
+    btnStopFocus.addEventListener("click", () => {
+      stopFocusTimer();
+      focusLabelEl.textContent = "Pausa. Retome o bloco assim que possível.";
+    });
+
+    btnResetFocus.addEventListener("click", () => {
+      stopFocusTimer();
+      focusSeconds = 25 * 60;
+      renderFocusTime();
+      focusLabelEl.textContent = "Pronto para iniciar o bloco de foco.";
+    });
+
+    // -------- Perfil / Simulações --------
+    const profileEmail = document.getElementById("profileEmail");
+    const profilePlanChip = document.getElementById("profilePlanChip");
+    const badgeCv = document.querySelector(".badge-cv");
+    const btnSimularLogin = document.getElementById("btnSimularLogin");
+    const btnSimularElite = document.getElementById("btnSimularElite");
+    const btnSimularVip = document.getElementById("btnSimularVip");
+
+    btnSimularLogin.addEventListener("click", () => {
+      profileEmail.textContent = "brunobrandao179@gmail.com";
+      alert("Login simulado com seu e-mail.");
+    });
+
+    btnSimularElite.addEventListener("click", () => {
+      profilePlanChip.textContent = "Plano atual: Elite";
+      profilePlanChip.style.borderColor = "#facc6b";
+      badgeCv.style.borderColor = "rgba(250, 204, 107, 0.7)";
+    });
+
+    btnSimularVip.addEventListener("click", () => {
+      profilePlanChip.textContent = "Plano atual: VIP";
+      profilePlanChip.style.borderColor = "#facc6b";
+      badgeCv.style.borderColor = "rgba(250, 204, 107, 0.9)";
+    });
+
+    // -------- Stripe (se /api/checkout existir) --------
+    const btnAssinarPro = document.getElementById("btnAssinarPro");
+    const plansNote = document.getElementById("plansNote");
+
+    btnAssinarPro.addEventListener("click", async () => {
+      try {
+        const res = await fetch("/api/checkout", { method: "POST" });
+        const data = await res.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          plansNote.textContent = "Erro ao criar pagamento. Verifique se a rota /api/checkout está configurada.";
+        }
+      } catch (e) {
+        plansNote.textContent = "Erro de conexão com o servidor. Tente novamente em alguns instantes.";
+      }
+    });
   </script>
 </body>
 </html>
