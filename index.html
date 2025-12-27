@@ -86,9 +86,19 @@
         <!-- Pergunta 4 -->
         <div class="quiz-screen" id="quiz-4">
             <h2 style="font-size:22px; margin-bottom:30px;">Qual seu nível de urgência para mudar sua situação financeira?</h2>
-            <div class="btn btn-primary" onclick="goToSales()">Baixa</div>
-            <div class="btn btn-primary" onclick="goToSales()">Média</div>
-            <div class="btn btn-primary" onclick="goToSales()">Alta (preciso agora)</div>
+            <div class="btn btn-primary" onclick="nextQuiz(5)">Baixa</div>
+            <div class="btn btn-primary" onclick="nextQuiz(5)">Média</div>
+            <div class="btn btn-primary" onclick="nextQuiz(5)">Alta (preciso agora)</div>
+        </div>
+
+        <!-- Pergunta 5: País -->
+        <div class="quiz-screen" id="quiz-5">
+            <h2 style="font-size:22px; margin-bottom:30px;">De qual país você é?</h2>
+            <div class="btn btn-primary" onclick="selectCountry('Brasil'); goToSales()">Brasil</div>
+            <div class="btn btn-primary" onclick="selectCountry('EUA'); goToSales()">EUA</div>
+            <div class="btn btn-primary" onclick="selectCountry('Portugal'); goToSales()">Portugal</div>
+            <div class="btn btn-primary" onclick="selectCountry('Espanha'); goToSales()">Espanha</div>
+            <div class="btn btn-primary" onclick="selectCountry('Canadá'); goToSales()">Canadá</div>
         </div>
     </div>
 </div>
@@ -99,13 +109,13 @@
 
         <!-- HERO -->
         <div class="text-center mb-40">
-            <h1 style="font-size:32px; margin-bottom:20px;">Ganhe Dinheiro Usando Inteligência Artificial de Forma Prática e Real</h1>
-            <p style="font-size:18px; opacity:0.9;">Aprenda estratégias modernas que funcionam hoje para criar renda extra, automatizar processos e escalar resultados com ferramentas gratuitas e acessíveis.</p>
+            <h1 id="hero-headline" style="font-size:32px; margin-bottom:20px;">Ganhe Dinheiro Usando Inteligência Artificial de Forma Prática e Real</h1>
+            <p id="hero-subheadline" style="font-size:18px; opacity:0.9;">Aprenda estratégias modernas que funcionam hoje para criar renda extra, automatizar processos e escalar resultados com ferramentas gratuitas e acessíveis.</p>
             
             <div class="card text-center" style="margin:40px 0;">
-                <p style="font-size:18px; margin-bottom:10px;">Oferta exclusiva expira em:</p>
+                <p id="offer-expires" style="font-size:18px; margin-bottom:10px;">Oferta exclusiva expira em:</p>
                 <div class="timer" id="timer">00:00:00</div>
-                <p style="font-size:14px; opacity:0.8; margin-top:10px;">Esta promoção é única para você</p>
+                <p id="promo-unique" style="font-size:14px; opacity:0.8; margin-top:10px;">Esta promoção é única para você</p>
             </div>
         </div>
 
@@ -114,49 +124,49 @@
 
         <!-- CONTEÚDO -->
         <div class="card">
-            <h2 class="text-center mb-20" style="font-size:26px;">O que muda quando você domina a IA lucrativa</h2>
-            <p>Você para de perder horas criando conteúdo manualmente. A IA gera ideias, textos, imagens e estratégias em minutos.</p>
-            <p class="mb-20">Você automatiza tarefas repetitivas e foca no que realmente gera dinheiro: vender, conectar e escalar.</p>
-            <p>Você entra em um fluxo constante de oportunidades reais — sem promessas mágicas, apenas métodos testados que funcionam em 2025.</p>
+            <h2 id="content-title" class="text-center mb-20" style="font-size:26px;">O que muda quando você domina a IA lucrativa</h2>
+            <p id="content-p1">Você para de perder horas criando conteúdo manualmente. A IA gera ideias, textos, imagens e estratégias em minutos.</p>
+            <p id="content-p2" class="mb-20">Você automatiza tarefas repetitivas e foca no que realmente gera dinheiro: vender, conectar e escalar.</p>
+            <p id="content-p3">Você entra em um fluxo constante de oportunidades reais — sem promessas mágicas, apenas métodos testados que funcionam em 2025.</p>
         </div>
 
         <!-- GRÁFICOS SVG -->
         <div class="card text-center">
-            <h3 style="margin-bottom:30px;">Produtividade com IA</h3>
+            <h3 id="graph1-title" style="margin-bottom:30px;">Produtividade com IA</h3>
             <svg viewBox="0 0 300 200">
                 <rect x="0" y="150" width="60" height="50" fill="#333"/>
                 <rect x="80" y="100" width="60" height="100" fill="#333"/>
                 <rect x="160" y="40" width="60" height="160" fill="var(--accent)"/>
                 <rect x="240" y="10" width="60" height="190" fill="var(--accent)"/>
-                <text x="30" y="190" fill="#aaa" font-size="12">Sem IA</text>
-                <text x="110" y="190" fill="#aaa" font-size="12">Início</text>
-                <text x="190" y="190" fill="#fff" font-size="12">30 dias</text>
-                <text x="270" y="190" fill="#fff" font-size="12">60 dias</text>
+                <text id="graph1-label1" x="30" y="190" fill="#aaa" font-size="12">Sem IA</text>
+                <text id="graph1-label2" x="110" y="190" fill="#aaa" font-size="12">Início</text>
+                <text id="graph1-label3" x="190" y="190" fill="#fff" font-size="12">30 dias</text>
+                <text id="graph1-label4" x="270" y="190" fill="#fff" font-size="12">60 dias</text>
             </svg>
         </div>
 
         <div class="card text-center">
-            <h3 style="margin-bottom:30px;">Antes x Depois</h3>
+            <h3 id="graph2-title" style="margin-bottom:30px;">Antes x Depois</h3>
             <svg viewBox="0 0 300 180">
                 <circle cx="90" cy="90" r="60" fill="#ff3366" opacity="0.3"/>
                 <circle cx="210" cy="90" r="60" fill="var(--accent)" opacity="0.8"/>
-                <text x="90" y="95" fill="#fff" font-size="14" text-anchor="middle">Horas perdidas</text>
-                <text x="210" y="95" fill="#000" font-size="14" text-anchor="middle">Tempo livre</text>
+                <text id="graph2-label1" x="90" y="95" fill="#fff" font-size="14" text-anchor="middle">Horas perdidas</text>
+                <text id="graph2-label2" x="210" y="95" fill="#000" font-size="14" text-anchor="middle">Tempo livre</text>
             </svg>
         </div>
 
         <div class="card text-center">
-            <h3 style="margin-bottom:30px;">Evolução dos ganhos</h3>
+            <h3 id="graph3-title" style="margin-bottom:30px;">Evolução dos ganhos</h3>
             <svg viewBox="0 0 300 180">
                 <polyline fill="none" stroke="var(--accent)" stroke-width="6" points="20,160 80,130 140,90 200,60 260,30"/>
-                <text x="20" y="175" fill="#aaa" font-size="12">Início</text>
-                <text x="260" y="175" fill="#fff" font-size="12">90 dias</text>
+                <text id="graph3-label1" x="20" y="175" fill="#aaa" font-size="12">Início</text>
+                <text id="graph3-label2" x="260" y="175" fill="#fff" font-size="12">90 dias</text>
             </svg>
         </div>
 
         <!-- BÔNUS IA GRATUITAS -->
         <div class="card">
-            <h2 class="text-center mb-20" style="font-size:24px;">Ferramentas gratuitas que você vai dominar</h2>
+            <h2 id="bonus-title" class="text-center mb-20" style="font-size:24px;">Ferramentas gratuitas que você vai dominar</h2>
             <div class="carousel">
                 <div class="tool-item">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT">
@@ -191,7 +201,7 @@
 
         <!-- PLATAFORMAS -->
         <div class="card">
-            <h2 class="text-center mb-20" style="font-size:24px;">Plataformas onde você vai lucrar</h2>
+            <h2 id="platforms-title" class="text-center mb-20" style="font-size:24px;">Plataformas onde você vai lucrar</h2>
             <div class="platform-grid">
                 <div class="platform-item">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
@@ -215,39 +225,38 @@
                 </div>
                 <div class="platform-item"></div>
             </div>
-            <p class="text-center">A IA cria conteúdo viral, legendas, roteiros, thumbnails e estratégias de crescimento automático.</p>
+            <p id="platforms-text" class="text-center">A IA cria conteúdo viral, legendas, roteiros, thumbnails e estratégias de crescimento automático.</p>
         </div>
 
         <!-- OFERTAS -->
-        <h2 class="text-center mb-40" style="font-size:28px;">Escolha seu acesso agora</h2>
+        <h2 id="offers-title" class="text-center mb-40" style="font-size:28px;">Escolha seu acesso agora</h2>
 
         <div class="offer-cards">
             <!-- Oferta 1 - Esgotada -->
             <div class="offer-card card">
-                <div class="sold-out">ESGOTADA</div>
-                <h3 style="font-size:22px;">Básica</h3>
-                <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 19,90</p>
-                <div class="btn btn-disabled">Indisponível no momento</div>
+                <div class="sold-out" id="sold-out-text">ESGOTADA</div>
+                <h3 id="offer1-title" style="font-size:22px;">Básica</h3>
+                <div class="btn btn-disabled" id="offer1-button">Indisponível no momento</div>
             </div>
 
             <!-- Oferta 2 -->
             <div class="offer-card card">
-                <h3 style="font-size:22px;">IA Lucrativa</h3>
-                <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 29,99</p>
-                <p style="opacity:0.9;">✓ Acesso imediato<br>✓ Estratégias práticas<br>✓ Suporte comunitário</p>
+                <h3 id="offer2-title" style="font-size:22px;">IA Lucrativa</h3>
+                <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 19,90</p>
+                <p id="offer2-benefits" style="opacity:0.9;">✓ Acesso imediato<br>✓ Estratégias práticas<br>✓ Suporte comunitário<br>✓ Ferramentas gratuitas<br>✓ Atualizações mensais<br>✓ Guia rápido de início</p>
                 <a href="https://pay.cakto.com.br/4ehcq2y_672236" class="btn btn-primary">
-                    🚀 Quero começar agora<br><small>Acesso vitalício • Oferta limitada</small>
+                    <span id="offer2-btn-text">🚀 Quero começar agora</span><br><small id="offer2-btn-small">Acesso vitalício • Oferta limitada • Antes que expire!</small>
                 </a>
             </div>
 
             <!-- Oferta 3 - Mais escolhida -->
             <div class="offer-card card">
-                <div class="most-popular">Mais escolhida</div>
-                <h3 style="font-size:22px;">IA Lucrativa Completa</h3>
-                <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 29,99</p>
-                <p style="opacity:0.9;">✓ Tudo da versão padrão<br>✓ Bônus exclusivos<br>✓ Atualizações prioritárias<br>✓ Resultados mais rápidos</p>
+                <div class="most-popular" id="most-popular-text">Mais escolhida</div>
+                <h3 id="offer3-title" style="font-size:22px;">IA Lucrativa Completa</h3>
+                <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 29,90</p>
+                <p id="offer3-benefits" style="opacity:0.9;">✓ Tudo da versão padrão<br>✓ Bônus exclusivos<br>✓ Atualizações prioritárias<br>✓ Resultados mais rápidos<br>✓ Comunidade VIP<br>✓ Mentoria básica</p>
                 <a href="https://pay.cakto.com.br/v8k65mm_672262" class="btn btn-primary">
-                    🔥 Quero o acesso completo<br><small>Melhor opção • Últimas vagas</small>
+                    <span id="offer3-btn-text">🔥 Quero o acesso completo</span><br><small id="offer3-btn-small">Melhor opção • Últimas vagas • Ação imediata!</small>
                 </a>
             </div>
         </div>
@@ -259,18 +268,169 @@
 <script>
     // Quiz logic
     let currentQuiz = 1;
+    let selectedCountry = 'Brasil'; // Default
     function nextQuiz(next) {
         document.getElementById('quiz-' + currentQuiz).style.display = 'none';
         document.getElementById('quiz-' + next).style.display = 'block';
         currentQuiz = next;
-        document.getElementById('progress').style.width = (next / 4 * 100) + '%';
+        document.getElementById('progress').style.width = (next / 5 * 100) + '%';
+    }
+    function selectCountry(country) {
+        selectedCountry = country;
     }
     function goToSales() {
         document.getElementById('quiz-section').style.display = 'none';
         document.getElementById('sales-page').style.display = 'block';
+        translatePage();
         startTimer();
         startNotifications();
     }
+
+    // Map country to language
+    const langMap = {
+        'Brasil': 'pt',
+        'Portugal': 'pt',
+        'EUA': 'en',
+        'Canadá': 'en',
+        'Espanha': 'es'
+    };
+
+    // Translations object
+    const translations = {
+        'pt': {
+            'hero-headline': 'Ganhe Dinheiro Usando Inteligência Artificial de Forma Prática e Real',
+            'hero-subheadline': 'Aprenda estratégias modernas que funcionam hoje para criar renda extra, automatizar processos e escalar resultados com ferramentas gratuitas e acessíveis.',
+            'offer-expires': 'Oferta exclusiva expira em:',
+            'promo-unique': 'Esta promoção é única para você',
+            'content-title': 'O que muda quando você domina a IA lucrativa',
+            'content-p1': 'Você para de perder horas criando conteúdo manualmente. A IA gera ideias, textos, imagens e estratégias em minutos.',
+            'content-p2': 'Você automatiza tarefas repetitivas e foca no que realmente gera dinheiro: vender, conectar e escalar.',
+            'content-p3': 'Você entra em um fluxo constante de oportunidades reais — sem promessas mágicas, apenas métodos testados que funcionam em 2025.',
+            'graph1-title': 'Produtividade com IA',
+            'graph1-label1': 'Sem IA',
+            'graph1-label2': 'Início',
+            'graph1-label3': '30 dias',
+            'graph1-label4': '60 dias',
+            'graph2-title': 'Antes x Depois',
+            'graph2-label1': 'Horas perdidas',
+            'graph2-label2': 'Tempo livre',
+            'graph3-title': 'Evolução dos ganhos',
+            'graph3-label1': 'Início',
+            'graph3-label2': '90 dias',
+            'bonus-title': 'Ferramentas gratuitas que você vai dominar',
+            'platforms-title': 'Plataformas onde você vai lucrar',
+            'platforms-text': 'A IA cria conteúdo viral, legendas, roteiros, thumbnails e estratégias de crescimento automático.',
+            'offers-title': 'Escolha seu acesso agora',
+            'sold-out-text': 'ESGOTADA',
+            'offer1-title': 'Básica',
+            'offer1-button': 'Indisponível no momento',
+            'offer2-title': 'IA Lucrativa',
+            'offer2-benefits': '✓ Acesso imediato<br>✓ Estratégias práticas<br>✓ Suporte comunitário<br>✓ Ferramentas gratuitas<br>✓ Atualizações mensais<br>✓ Guia rápido de início',
+            'offer2-btn-text': '🚀 Quero começar agora',
+            'offer2-btn-small': 'Acesso vitalício • Oferta limitada • Antes que expire!',
+            'most-popular-text': 'Mais escolhida',
+            'offer3-title': 'IA Lucrativa Completa',
+            'offer3-benefits': '✓ Tudo da versão padrão<br>✓ Bônus exclusivos<br>✓ Atualizações prioritárias<br>✓ Resultados mais rápidos<br>✓ Comunidade VIP<br>✓ Mentoria básica',
+            'offer3-btn-text': '🔥 Quero o acesso completo',
+            'offer3-btn-small': 'Melhor opção • Últimas vagas • Ação imediata!',
+            'notification-text': 'acabou de adquirir'
+        },
+        'en': {
+            'hero-headline': 'Make Money Using Artificial Intelligence in a Practical and Real Way',
+            'hero-subheadline': 'Learn modern strategies that work today to create extra income, automate processes, and scale results with free and accessible tools.',
+            'offer-expires': 'Exclusive offer expires in:',
+            'promo-unique': 'This promotion is unique to you',
+            'content-title': 'What changes when you master profitable AI',
+            'content-p1': 'You stop wasting hours creating content manually. AI generates ideas, texts, images, and strategies in minutes.',
+            'content-p2': 'You automate repetitive tasks and focus on what really makes money: selling, connecting, and scaling.',
+            'content-p3': 'You enter a constant flow of real opportunities — no magic promises, just tested methods that work in 2025.',
+            'graph1-title': 'Productivity with AI',
+            'graph1-label1': 'Without AI',
+            'graph1-label2': 'Start',
+            'graph1-label3': '30 days',
+            'graph1-label4': '60 days',
+            'graph2-title': 'Before x After',
+            'graph2-label1': 'Lost hours',
+            'graph2-label2': 'Free time',
+            'graph3-title': 'Earnings evolution',
+            'graph3-label1': 'Start',
+            'graph3-label2': '90 days',
+            'bonus-title': 'Free tools you will master',
+            'platforms-title': 'Platforms where you will profit',
+            'platforms-text': 'AI creates viral content, captions, scripts, thumbnails, and automatic growth strategies.',
+            'offers-title': 'Choose your access now',
+            'sold-out-text': 'SOLD OUT',
+            'offer1-title': 'Basic',
+            'offer1-button': 'Unavailable at the moment',
+            'offer2-title': 'Profitable AI',
+            'offer2-benefits': '✓ Immediate access<br>✓ Practical strategies<br>✓ Community support<br>✓ Free tools<br>✓ Monthly updates<br>✓ Quick start guide',
+            'offer2-btn-text': '🚀 I want to start now',
+            'offer2-btn-small': 'Lifetime access • Limited offer • Before it expires!',
+            'most-popular-text': 'Most chosen',
+            'offer3-title': 'Complete Profitable AI',
+            'offer3-benefits': '✓ Everything from the standard version<br>✓ Exclusive bonuses<br>✓ Priority updates<br>✓ Faster results<br>✓ VIP community<br>✓ Basic mentoring',
+            'offer3-btn-text': '🔥 I want full access',
+            'offer3-btn-small': 'Best option • Last spots • Immediate action!',
+            'notification-text': 'just acquired'
+        },
+        'es': {
+            'hero-headline': 'Gana Dinero Usando Inteligencia Artificial de Forma Práctica y Real',
+            'hero-subheadline': 'Aprende estrategias modernas que funcionan hoy para crear ingresos extra, automatizar procesos y escalar resultados con herramientas gratuitas y accesibles.',
+            'offer-expires': 'Oferta exclusiva expira en:',
+            'promo-unique': 'Esta promoción es única para ti',
+            'content-title': 'Qué cambia cuando dominas la IA lucrativa',
+            'content-p1': 'Dejas de perder horas creando contenido manualmente. La IA genera ideas, textos, imágenes y estrategias en minutos.',
+            'content-p2': 'Automatizas tareas repetitivas y te enfocas en lo que realmente genera dinero: vender, conectar y escalar.',
+            'content-p3': 'Entras en un flujo constante de oportunidades reales — sin promesas mágicas, solo métodos probados que funcionan en 2025.',
+            'graph1-title': 'Productividad con IA',
+            'graph1-label1': 'Sin IA',
+            'graph1-label2': 'Inicio',
+            'graph1-label3': '30 días',
+            'graph1-label4': '60 días',
+            'graph2-title': 'Antes x Después',
+            'graph2-label1': 'Horas perdidas',
+            'graph2-label2': 'Tiempo libre',
+            'graph3-title': 'Evolución de ganancias',
+            'graph3-label1': 'Inicio',
+            'graph3-label2': '90 días',
+            'bonus-title': 'Herramientas gratuitas que dominarás',
+            'platforms-title': 'Plataformas donde ganarás',
+            'platforms-text': 'La IA crea contenido viral, leyendas, guiones, miniaturas y estrategias de crecimiento automático.',
+            'offers-title': 'Elige tu acceso ahora',
+            'sold-out-text': 'AGOTADA',
+            'offer1-title': 'Básica',
+            'offer1-button': 'No disponible en este momento',
+            'offer2-title': 'IA Lucrativa',
+            'offer2-benefits': '✓ Acceso inmediato<br>✓ Estrategias prácticas<br>✓ Soporte comunitario<br>✓ Herramientas gratuitas<br>✓ Actualizaciones mensuales<br>✓ Guía de inicio rápido',
+            'offer2-btn-text': '🚀 Quiero empezar ahora',
+            'offer2-btn-small': 'Acceso de por vida • Oferta limitada • ¡Antes de que expire!',
+            'most-popular-text': 'Más elegida',
+            'offer3-title': 'IA Lucrativa Completa',
+            'offer3-benefits': '✓ Todo de la versión estándar<br>✓ Bonos exclusivos<br>✓ Actualizaciones prioritarias<br>✓ Resultados más rápidos<br>✓ Comunidad VIP<br>✓ Mentoría básica',
+            'offer3-btn-text': '🔥 Quiero el acceso completo',
+            'offer3-btn-small': 'Mejor opción • Últimas plazas • ¡Acción inmediata!',
+            'notification-text': 'acaba de adquirir'
+        }
+    };
+
+    // Translate page
+    function translatePage() {
+        const lang = langMap[selectedCountry] || 'pt';
+        document.documentElement.lang = lang === 'pt' ? 'pt-BR' : lang === 'en' ? 'en' : 'es';
+        for (const key in translations[lang]) {
+            const elem = document.getElementById(key);
+            if (elem) {
+                if (elem.tagName === 'TEXT') { // For SVG text
+                    elem.textContent = translations[lang][key];
+                } else {
+                    elem.innerHTML = translations[lang][key];
+                }
+            }
+        }
+        currentLang = lang; // For notifications
+    }
+
+    let currentLang = 'pt';
 
     // Timer único por usuário
     function startTimer() {
@@ -304,7 +464,7 @@
 
     // Notificações falsas realistas
     const names = ['João S.', 'Maria L.', 'Pedro R.', 'Ana C.', 'Lucas M.', 'Carla F.', 'Rafael T.', 'Juliana P.', 'Thiago K.', 'Beatriz O.'];
-    const countries = ['Brasil', 'Portugal', 'EUA', 'Canadá', 'Espanha'];
+    const countries = ['🇧🇷', '🇺🇸', '🇵🇹', '🇪🇸', '🇨🇦'];
     const offers = ['IA Lucrativa', 'IA Lucrativa Completa'];
     let usedNames = [];
 
@@ -320,7 +480,8 @@
         const offer = offers[Math.floor(Math.random() * offers.length)];
         
         const notif = document.getElementById('notification');
-        notif.innerHTML = `<strong>${name}</strong> de ${country} acabou de adquirir <strong>${offer}</strong>`;
+        const acquiredText = translations[currentLang]['notification-text'] || 'acabou de adquirir';
+        notif.innerHTML = `<strong>${name}</strong> ${country} ${acquiredText} <strong>${offer}</strong>`;
         notif.style.opacity = '1';
         setTimeout(() => { notif.style.opacity = '0'; }, 5000);
     }
