@@ -1,1299 +1,337 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <title>BillionMind AI – Acelerador de Disciplina</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <style>
-    :root {
-      --bg-main: #05070c;
-      --bg-card: #0b1018;
-      --bg-soft: #070b13;
-      --emerald: #10b981;
-      --emerald-soft: #34d399;
-      --gold: #facc6b;
-      --gold-muted: #c49b3f;
-      --danger: #ef4444;
-      --text-main: #f9fafb;
-      --text-soft: #cbd5f5;
-      --text-muted: #8b91aa;
-      --border-soft: rgba(148, 163, 184, 0.35);
-      --radius-xl: 22px;
-      --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.8);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      min-height: 100vh;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #151827 0, #05070c 50%, #020309 100%);
-      color: var(--text-main);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .app-shell {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 14px 14px 80px;
-    }
-
-    /* HEADER */
-    header.app-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 14px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brand-logo {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 30% 20%, #ffffff 0, #facc6b 10%, #c49b3f 45%, #0b0a0f 100%);
-      box-shadow:
-        0 0 0 2px rgba(0, 0, 0, 0.8),
-        0 0 18px rgba(250, 204, 107, 0.7);
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      line-height: 1.1;
-    }
-
-    .brand-title {
-      font-size: 0.9rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-    }
-
-    .brand-sub {
-      font-size: 0.74rem;
-      color: var(--text-muted);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-    }
-
-    .badge-cv {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(16, 185, 129, 0.7);
-      background: radial-gradient(circle at top, rgba(16, 185, 129, 0.2), rgba(3, 7, 18, 0.95));
-      font-size: 0.7rem;
-      display: inline-flex;
-      flex-direction: column;
-      justify-content: center;
-      min-width: 120px;
-    }
-
-    .badge-cv-main {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 6px;
-    }
-
-    .badge-cv-label {
-      color: var(--emerald-soft);
-      font-weight: 600;
-      font-size: 0.72rem;
-    }
-
-    .badge-cv-value {
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-
-    .badge-cv-sub {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .header-avatar {
-      width: 30px;
-      height: 30px;
-      border-radius: 999px;
-      border: 1px solid rgba(250, 204, 107, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      color: var(--gold);
-      background: radial-gradient(circle at top, #020617, #020309);
-      cursor: pointer;
-    }
-
-    /* TELAS */
-    main.app-screen {
-      display: none;
-    }
-
-    main.app-screen.active {
-      display: block;
-      animation: fadeIn 0.35s ease-out;
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(6px);}
-      to {opacity: 1; transform: translateY(0);}
-    }
-
-    /* BOTÕES */
-    .btn-primary {
-      border-radius: 999px;
-      border: none;
-      padding: 10px 14px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      background: linear-gradient(135deg, var(--emerald-soft), var(--emerald));
-      color: #041016;
-      cursor: pointer;
-      box-shadow: 0 14px 30px rgba(16, 185, 129, 0.55);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .btn-secondary {
-      border-radius: 999px;
-      padding: 10px 14px;
-      border: 1px solid rgba(148, 163, 184, 0.7);
-      background: rgba(7, 11, 19, 0.96);
-      color: var(--text-soft);
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .btn-outline-gold {
-      border-radius: 999px;
-      padding: 9px 13px;
-      border: 1px solid rgba(250, 204, 107, 0.8);
-      background: rgba(7, 8, 13, 0.92);
-      color: var(--gold);
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
-
-    .btn-small {
-      border-radius: 999px;
-      padding: 7px 11px;
-      border: none;
-      font-size: 0.78rem;
-      font-weight: 600;
-      cursor: pointer;
-      background: linear-gradient(135deg, #4b5563, #111827);
-      color: var(--text-soft);
-    }
-
-    /* HOME */
-    .card-hero {
-      background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.12), rgba(11, 15, 25, 0.98));
-      border-radius: var(--radius-xl);
-      padding: 18px 16px 18px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      box-shadow: var(--shadow-soft);
-      margin-bottom: 14px;
-    }
-
-    .hero-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 11px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--emerald-soft), var(--gold));
-      color: #020617;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 10px;
-    }
-
-    .hero-title {
-      font-size: 1.45rem;
-      line-height: 1.2;
-      margin-bottom: 8px;
-    }
-
-    .hero-title span {
-      color: var(--gold);
-    }
-
-    .hero-sub {
-      font-size: 0.88rem;
-      color: var(--text-soft);
-      margin-bottom: 12px;
-    }
-
-    .hero-sub span {
-      color: var(--emerald-soft);
-      font-weight: 600;
-    }
-
-    .hero-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
-
-    .hero-tags span {
-      font-size: 0.75rem;
-      padding: 4px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      color: var(--text-soft);
-      background: rgba(10, 14, 22, 0.95);
-    }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .home-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 10px;
-    }
-
-    @media (max-width: 720px) {
-      .home-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .home-card {
-      background: linear-gradient(150deg, rgba(15, 23, 42, 0.98), rgba(4, 7, 15, 0.98));
-      border-radius: 18px;
-      border: 1px solid rgba(30, 64, 175, 0.5);
-      padding: 12px 11px;
-    }
-
-    .home-card h3 {
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-
-    .home-card p {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-      margin-bottom: 7px;
-    }
-
-    .home-bullets {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-      list-style: none;
-    }
-
-    .home-bullets li {
-      margin-bottom: 3px;
-    }
-
-    .home-bullets li::before {
-      content: "• ";
-      color: var(--gold);
-    }
-
-    /* FORJA 30X */
-    .forge-card {
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(5, 7, 14, 0.98));
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-soft);
-      padding: 14px 12px;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .section-title {
-      font-size: 0.95rem;
-      margin-bottom: 4px;
-    }
-
-    .section-sub {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-      margin-bottom: 10px;
-    }
-
-    .forge-step-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-    }
-
-    .forge-step {
-      background: radial-gradient(circle at top left, rgba(250, 204, 107, 0.06), rgba(8, 11, 20, 0.98));
-      border-radius: 16px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      padding: 10px 9px;
-      font-size: 0.8rem;
-    }
-
-    .forge-step-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      margin-bottom: 4px;
-      gap: 6px;
-    }
-
-    .forge-step-title {
-      font-weight: 600;
-      font-size: 0.85rem;
-    }
-
-    .forge-step-tag {
-      font-size: 0.7rem;
-      padding: 2px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      color: var(--text-soft);
-    }
-
-    .forge-step textarea,
-    .forge-step input {
-      width: 100%;
-      border-radius: 12px;
-      border: 1px solid rgba(148, 163, 184, 0.65);
-      background: rgba(5, 7, 15, 0.96);
-      color: var(--text-main);
-      font-size: 0.8rem;
-      padding: 7px 8px;
-      resize: none;
-      margin-top: 6px;
-    }
-
-    .forge-step textarea::placeholder,
-    .forge-step input::placeholder {
-      color: var(--text-muted);
-    }
-
-    .forge-footer {
-      margin-top: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .forge-note {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-    }
-
-    .forge-note span {
-      color: var(--emerald-soft);
-    }
-
-    /* ANALYTICS */
-    .analytics-card {
-      background: linear-gradient(150deg, rgba(4, 7, 15, 0.98), #020309);
-      border-radius: var(--radius-xl);
-      padding: 14px 12px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      box-shadow: var(--shadow-soft);
-    }
-
-    .analytics-graph {
-      margin-top: 8px;
-      margin-bottom: 10px;
-      border-radius: 16px;
-      background: linear-gradient(180deg, #020617, #020309);
-      border: 1px solid rgba(31, 41, 55, 0.9);
-      padding: 8px 8px 10px;
-    }
-
-    .graph-header {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
-    .graph-line {
-      position: relative;
-      height: 80px;
-      border-radius: 12px;
-      background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.15), rgba(15, 23, 42, 0.9));
-      overflow: hidden;
-    }
-
-    .graph-line::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(0deg, rgba(15, 23, 42, 0.85) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 23, 42, 0.8) 1px, transparent 1px);
-      background-size: 100% 20px, 32px 100%;
-      opacity: 0.5;
-    }
-
-    .graph-curve {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(220, 38, 38, 0.0), rgba(220, 38, 38, 0.4), rgba(16, 185, 129, 0.8));
-      clip-path: polygon(
-        0% 70%,
-        10% 75%,
-        20% 50%,
-        30% 60%,
-        40% 40%,
-        50% 45%,
-        60% 30%,
-        70% 40%,
-        80% 25%,
-        90% 35%,
-        100% 20%,
-        100% 100%,
-        0% 100%
-      );
-      opacity: 0.95;
-    }
-
-    .analytics-kpis {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin-top: 8px;
-      font-size: 0.78rem;
-    }
-
-    .kpi-card {
-      background: rgba(10, 14, 23, 0.96);
-      border-radius: 12px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      padding: 6px 7px;
-    }
-
-    .kpi-label {
-      color: var(--text-muted);
-      margin-bottom: 2px;
-    }
-
-    .kpi-value {
-      font-weight: 600;
-      margin-bottom: 2px;
-    }
-
-    .kpi-tag {
-      font-size: 0.7rem;
-      color: var(--emerald-soft);
-    }
-
-    /* BLUEPRINT */
-    .blueprint-card {
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(5, 7, 16, 0.98));
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-soft);
-      padding: 14px 12px;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .bp-section-title {
-      font-size: 0.86rem;
-      margin-bottom: 4px;
-      color: var(--gold);
-    }
-
-    .bp-list {
-      margin-top: 4px;
-    }
-
-    .bp-item {
-      padding: 7px 8px;
-      border-radius: 12px;
-      border: 1px solid rgba(55, 65, 81, 0.9);
-      background: rgba(6, 9, 18, 0.96);
-      font-size: 0.8rem;
-      margin-bottom: 5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .bp-item.locked {
-      opacity: 0.6;
-    }
-
-    .bp-tag {
-      font-size: 0.7rem;
-      padding: 3px 7px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      color: var(--text-soft);
-    }
-
-    .bp-tag.vip {
-      border-color: var(--gold);
-      color: var(--gold);
-    }
-
-    /* FOCO */
-    .focus-card {
-      background: linear-gradient(150deg, rgba(8, 47, 73, 0.9), rgba(3, 7, 18, 0.98));
-      border-radius: var(--radius-xl);
-      border: 1px solid rgba(56, 189, 248, 0.7);
-      padding: 14px 12px;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .focus-timer {
-      margin-top: 8px;
-      margin-bottom: 10px;
-      border-radius: 16px;
-      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
-      border: 1px solid rgba(148, 163, 184, 0.8);
-      padding: 10px;
-      text-align: center;
-    }
-
-    .focus-time {
-      font-size: 1.8rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      margin-bottom: 4px;
-    }
-
-    .focus-label {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-    }
-
-    .focus-buttons {
-      margin-top: 10px;
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .focus-note {
-      font-size: 0.76rem;
-      color: var(--text-muted);
-      margin-top: 6px;
-    }
-
-    /* PERFIL / ASSINATURA */
-    .profile-card {
-      background: linear-gradient(145deg, rgba(15, 23, 42, 0.98), rgba(5, 7, 16, 0.98));
-      border-radius: var(--radius-xl);
-      border: 1px solid var(--border-soft);
-      padding: 14px 12px;
-      box-shadow: var(--shadow-soft);
-    }
-
-    .profile-row {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .profile-avatar-big {
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 20%, #ffffff 0, #facc6b 10%, #c49b3f 45%, #0b0a10 100%);
-      border: 1px solid rgba(250, 204, 107, 0.7);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      color: #161616;
-    }
-
-    .profile-main {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .profile-name {
-      font-size: 0.95rem;
-      font-weight: 600;
-    }
-
-    .profile-email {
-      font-size: 0.78rem;
-      color: var(--text-soft);
-      margin-bottom: 3px;
-    }
-
-    .profile-plan-chip {
-      font-size: 0.75rem;
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(16, 185, 129, 0.7);
-      color: var(--emerald-soft);
-      width: fit-content;
-    }
-
-    .profile-lines {
-      font-size: 0.8rem;
-      color: var(--text-soft);
-    }
-
-    .profile-lines div {
-      margin-bottom: 3px;
-    }
-
-    .profile-btn-row {
-      margin-top: 8px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .plans-mini {
-      margin-top: 10px;
-      font-size: 0.78rem;
-      color: var(--text-soft);
-    }
-
-    .plans-mini strong {
-      color: var(--gold);
-    }
-
-    /* NAV INFERIOR */
-    nav.bottom-nav {
-      position: fixed;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 8px 10px 14px;
-      background: radial-gradient(circle at top, rgba(5, 7, 12, 0.98), #020309 70%);
-      border-top: 1px solid rgba(148, 163, 184, 0.3);
-      backdrop-filter: blur(16px);
-      z-index: 30;
-    }
-
-    .bottom-nav-inner {
-      max-width: 980px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 4px;
-    }
-
-    .nav-item {
-      flex: 1;
-      text-align: center;
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      padding: 4px 0;
-    }
-
-    .nav-item span.icon {
-      display: block;
-      font-size: 1.1rem;
-      margin-bottom: 2px;
-    }
-
-    .nav-item.active {
-      color: var(--emerald-soft);
-      font-weight: 600;
-    }
-
-    .nav-item.active span.icon {
-      filter: drop-shadow(0 0 10px rgba(16, 185, 129, 0.9));
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Lucrativa</title>
+    <meta name="description" content="Descubra como ganhar dinheiro de forma prática usando Inteligência Artificial moderna.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0f0f17;
+            --text: #e0e0e0;
+            --accent: #00ff9d;
+            --card: #171722;
+            --border: #252530;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); line-height:1.6; min-height:100vh; }
+        .container { max-width:480px; margin:0 auto; padding:0 20px; }
+        h1, h2, h3 { line-height:1.2; }
+        .btn { display:block; width:100%; padding:18px; border-radius:12px; font-weight:600; font-size:18px; text-align:center; cursor:pointer; transition:all .3s; margin:20px 0; }
+        .btn-primary { background:var(--accent); color:#000; }
+        .btn-primary:hover { transform:scale(1.02); }
+        .btn-disabled { background:#333; color:#666; cursor:not-allowed; }
+        .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin:30px 0; }
+        .text-center { text-align:center; }
+        .mb-20 { margin-bottom:20px; }
+        .mb-40 { margin-bottom:40px; }
+        .flex { display:flex; align-items:center; justify-content:space-between; }
+        .progress-bar { height:6px; background:#252530; border-radius:3px; overflow:hidden; margin:30px 0; }
+        .progress { height:100%; background:var(--accent); width:0%; transition:width .6s ease; }
+        .quiz-screen, #sales-page { display:none; min-height:100vh; }
+        #quiz-1 { display:block; }
+        .notification { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.9); color:#fff; padding:14px 24px; border-radius:12px; font-size:14px; z-index:1000; opacity:0; transition:opacity .4s; border-left:4px solid var(--accent); max-width:90%; }
+        .timer { font-size:32px; font-weight:700; color:var(--accent); }
+        .carousel { overflow-x:auto; display:flex; gap:20px; padding:10px 0; scrollbar-width:none; }
+        .carousel::-webkit-scrollbar { display:none; }
+        .tool-item { min-width:100px; text-align:center; }
+        .tool-item img { width:80px; height:80px; object-fit:contain; border-radius:12px; background:#222; padding:10px; }
+        .platform-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin:40px 0; }
+        .platform-item { text-align:center; }
+        .platform-item img { width:70px; height:70px; object-fit:contain; }
+        .offer-cards { display:grid; gap:20px; }
+        .offer-card { position:relative; }
+        .sold-out { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-15deg); font-size:36px; color:#ff3366; font-weight:700; opacity:0.8; pointer-events:none; }
+        .most-popular { position:absolute; top:-12px; right:20px; background:var(--accent); color:#000; padding:6px 16px; border-radius:20px; font-size:14px; font-weight:600; }
+        svg { width:100%; max-width:300px; margin:20px auto; display:block; }
+    </style>
 </head>
 <body>
-  <div class="app-shell">
-    <header class="app-header">
-      <div class="brand">
-        <div class="brand-logo"></div>
-        <div class="brand-text">
-          <div class="brand-title">BILLIONMIND</div>
-          <div class="brand-sub">Acelerador de Disciplina · Edição Completa</div>
-        </div>
-      </div>
-      <div class="header-actions">
-        <div class="badge-cv">
-          <div class="badge-cv-main">
-            <span class="badge-cv-label">Capital de Vida</span>
-            <span class="badge-cv-value" id="cvValue">0</span>
-          </div>
-          <div class="badge-cv-sub" id="cvLevelLabel">Nível: Visionário</div>
-        </div>
-        <div class="header-avatar" id="headerAvatar">
-          BB
-        </div>
-      </div>
-    </header>
 
-    <!-- HOME -->
-    <main id="screen-home" class="app-screen active">
-      <section class="card-hero">
-        <div class="hero-pill">
-          <span>⚡</span> Acelerador de Disciplina · 30 dias
-        </div>
-        <h1 class="hero-title">
-          Transforme disciplina em <span>patrimônio de alta performance</span>.
-        </h1>
-        <p class="hero-sub">
-          O BillionMind AI não te dá frases vazias. Ele converte <span>ação diária</span>
-          em <span>Capital de Vida (CV)</span>, nível de poder e status dentro do seu próprio sistema.
-        </p>
-        <div class="hero-tags">
-          <span>CV Analytics em tempo real</span>
-          <span>Forja da Disciplina 30X</span>
-          <span>Billionaire Blueprint</span>
-          <span>Protocolos de Foco & KPIs</span>
-        </div>
-        <div class="hero-actions">
-          <button class="btn-primary" data-nav="screen-forge">
-            🔥 Iniciar Forja da Disciplina 30X
-          </button>
-          <button class="btn-secondary" data-nav="screen-analytics">
-            📈 Ver meu painel CV Analytics
-          </button>
-        </div>
-      </section>
+<!-- QUIZ SECTION -->
+<div id="quiz-section">
+    <div class="container" style="padding-top:60px;">
+        <h1 class="text-center mb-40" style="font-size:28px;">Descubra seu potencial com IA</h1>
+        
+        <div class="progress-bar"><div class="progress" id="progress"></div></div>
 
-      <div class="home-grid">
-        <div class="home-card">
-          <h3>Como o Capital de Vida funciona</h3>
-          <p>
-            Seu CV sobe quando você cumpre os Protocolos Diários e desce quando você foge deles.
-            É sua “bolsa de valores” da disciplina.
-          </p>
-          <ul class="home-bullets">
-            <li>Complete o desafio do dia para ganhar CV.</li>
-            <li>Mantenha constância para subir de nível (Visionário → VIP).</li>
-            <li>Use o CV Analytics para ver se você está em ascensão ou queda.</li>
-          </ul>
-        </div>
-        <div class="home-card">
-          <h3>Planos e status</h3>
-          <p>
-            Gratuito para começar. Elite e VIP para quem quer jogar o jogo completo.
-          </p>
-          <ul class="home-bullets">
-            <li>Visionário: modo teste, 5 dias de protocolo.</li>
-            <li>Elite: protocolos ilimitados + KPIs avançados.</li>
-            <li>VIP: tudo desbloqueado + conteúdo exclusivo.</li>
-          </ul>
-        </div>
-      </div>
-    </main>
-
-    <!-- FORJA DA DISCIPLINA 30X -->
-    <main id="screen-forge" class="app-screen">
-      <section class="forge-card">
-        <h2 class="section-title">Forja da Disciplina 30X</h2>
-        <p class="section-sub">
-          Todo dia, um protocolo. Você tem 24h para executar o plano do dia. Ao concluir, seu CV sobe.
-        </p>
-
-        <div class="forge-step-grid">
-          <div class="forge-step">
-            <div class="forge-step-header">
-              <div class="forge-step-title">1. Dose VIP (Mentoria do Dia)</div>
-              <div class="forge-step-tag">Mentalidade</div>
-            </div>
-            <p>
-              Hoje seu foco é <strong>agir como alguém que já vive o lifestyle que deseja</strong>.
-              Durante 1 bloco de foco, trabalhe como se alguém estivesse auditando sua disciplina.
-            </p>
-          </div>
-
-          <div class="forge-step">
-            <div class="forge-step-header">
-              <div class="forge-step-title">2. Protocolo de Ação</div>
-              <div class="forge-step-tag">Execução</div>
-            </div>
-            <p>Defina uma ação clara e mensurável para hoje:</p>
-            <textarea id="forgeTask" rows="3"
-              placeholder="Ex: 60 minutos de Deep Work montando meu plano de receita das próximas 4 semanas..."></textarea>
-          </div>
-
-          <div class="forge-step">
-            <div class="forge-step-header">
-              <div class="forge-step-title">3. Relatório de Execução</div>
-              <div class="forge-step-tag">Métricas</div>
-            </div>
-            <p>Registre como você foi na prática:</p>
-            <input id="forgeTime" placeholder="Tempo dedicado (ex: 65 minutos)" />
-            <input id="forgeQuality" placeholder="Qualidade da execução (0 a 10)" />
-          </div>
+        <!-- Pergunta 1 -->
+        <div class="quiz-screen" id="quiz-1">
+            <h2 style="font-size:22px; margin-bottom:30px;">Qual seu principal objetivo usando IA?</h2>
+            <div class="btn btn-primary" onclick="nextQuiz(2)">Renda extra</div>
+            <div class="btn btn-primary" onclick="nextQuiz(2)">Negócio online</div>
+            <div class="btn btn-primary" onclick="nextQuiz(2)">Automatizar trabalho</div>
+            <div class="btn btn-primary" onclick="nextQuiz(2)">Escalar resultados</div>
         </div>
 
-        <div class="forge-footer">
-          <button class="btn-primary" id="btnConcluirDia">
-            ✅ Concluir protocolo de hoje e ganhar CV
-          </button>
-          <p class="forge-note" id="forgeNote">
-            Ao concluir o protocolo de hoje você ganhará <span>+120 de CV</span>.
-            Uma vez por dia, sem repetição.
-          </p>
-        </div>
-      </section>
-    </main>
-
-    <!-- CV ANALYTICS -->
-    <main id="screen-analytics" class="app-screen">
-      <section class="analytics-card">
-        <h2 class="section-title">CV Analytics · Painel de Alta Performance</h2>
-        <p class="section-sub">
-          Veja seu Capital de Vida como se fosse uma carteira de investimentos. Alta disciplina, alta valorização.
-        </p>
-
-        <div class="analytics-graph">
-          <div class="graph-header">
-            <span id="graphStatus">CV em ascensão</span>
-            <span id="graphCvLabel">CV atual: 0</span>
-          </div>
-          <div class="graph-line">
-            <div class="graph-curve"></div>
-          </div>
+        <!-- Pergunta 2 -->
+        <div class="quiz-screen" id="quiz-2">
+            <h2 style="font-size:22px; margin-bottom:30px;">Quanto tempo por semana você pode dedicar?</h2>
+            <div class="btn btn-primary" onclick="nextQuiz(3)">Menos de 5h</div>
+            <div class="btn btn-primary" onclick="nextQuiz(3)">5–10h</div>
+            <div class="btn btn-primary" onclick="nextQuiz(3)">10h ou mais</div>
         </div>
 
-        <div class="analytics-kpis">
-          <div class="kpi-card">
-            <div class="kpi-label">Horas de Foco (24h)</div>
-            <div class="kpi-value" id="kpiFocus">0.0 h</div>
-            <div class="kpi-tag">Alvo: 3.0 h</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Rendimento (Semana)</div>
-            <div class="kpi-value" id="kpiRevenue">R$ 0</div>
-            <div class="kpi-tag">Meta: R$ 1.000</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-label">Disciplina Física</div>
-            <div class="kpi-value" id="kpiTraining">0 sessões</div>
-            <div class="kpi-tag">Meta: 4/semana</div>
-          </div>
+        <!-- Pergunta 3 -->
+        <div class="quiz-screen" id="quiz-3">
+            <h2 style="font-size:22px; margin-bottom:30px;">Já tentou ganhar dinheiro online antes?</h2>
+            <div class="btn btn-primary" onclick="nextQuiz(4)">Nunca</div>
+            <div class="btn btn-primary" onclick="nextQuiz(4)">Já tentei</div>
+            <div class="btn btn-primary" onclick="nextQuiz(4)">Já ganho algo</div>
         </div>
 
-        <p class="forge-note" style="margin-top:10px;">
-          Em breve: conecte seus KPIs reais (tempo de estudo, vendas, treino) e veja o impacto direto no seu CV.
-        </p>
-      </section>
-    </main>
-
-    <!-- BLUEPRINT -->
-    <main id="screen-blueprint" class="app-screen">
-      <section class="blueprint-card">
-        <h2 class="section-title">Billionaire Blueprint · Cofre de Conhecimento</h2>
-        <p class="section-sub">
-          Módulos curtos, diretos ao ponto. Cada módulo concluído com quiz aumenta seu Capital de Vida.
-        </p>
-
-        <div class="bp-list">
-          <div class="bp-section-title">Foco & Disciplina</div>
-          <div class="bp-item">
-            <span>Fundamentos da Disciplina Implacável</span>
-            <span class="bp-tag">Introdução · Free</span>
-          </div>
-          <div class="bp-item">
-            <span>Arquitetando seus 30 dias de alta performance</span>
-            <span class="bp-tag">Elite</span>
-          </div>
-          <div class="bp-item locked">
-            <span>Rotina de Bilionário: como blindar sua mente</span>
-            <span class="bp-tag vip">VIP</span>
-          </div>
-
-          <div class="bp-section-title" style="margin-top:8px;">Finanças & Riqueza</div>
-          <div class="bp-item">
-            <span>Do zero ao primeiro fluxo de renda extra</span>
-            <span class="bp-tag">Elite</span>
-          </div>
-          <div class="bp-item locked">
-            <span>Estrutura mental de quem fatura alto no digital</span>
-            <span class="bp-tag vip">VIP</span>
-          </div>
-
-          <div class="bp-section-title" style="margin-top:8px;">Longevidade & Performance Física</div>
-          <div class="bp-item">
-            <span>Disciplina física mínima para alta performance</span>
-            <span class="bp-tag">Free</span>
-          </div>
-          <div class="bp-item locked">
-            <span>Protocolo Avançado de Energia Diária</span>
-            <span class="bp-tag vip">VIP</span>
-          </div>
+        <!-- Pergunta 4 -->
+        <div class="quiz-screen" id="quiz-4">
+            <h2 style="font-size:22px; margin-bottom:30px;">Qual seu nível de urgência para mudar sua situação financeira?</h2>
+            <div class="btn btn-primary" onclick="goToSales()">Baixa</div>
+            <div class="btn btn-primary" onclick="goToSales()">Média</div>
+            <div class="btn btn-primary" onclick="goToSales()">Alta (preciso agora)</div>
         </div>
-
-        <p class="forge-note" style="margin-top:8px;">
-          Em breve: quizzes, desbloqueio de CV e trilhas completas serão conectados ao seu perfil real.
-        </p>
-      </section>
-    </main>
-
-    <!-- FOCO -->
-    <main id="screen-focus" class="app-screen">
-      <section class="focus-card">
-        <h2 class="section-title">Protocolo de Foco · Pomodoro High Performance</h2>
-        <p class="section-sub">
-          Use blocos de 25 minutos como se cada um valesse R$ 10.000,00 em construção de vida.
-        </p>
-
-        <div class="focus-timer">
-          <div class="focus-time" id="focusTime">25:00</div>
-          <div class="focus-label" id="focusLabel">Pronto para iniciar o bloco de foco.</div>
-        </div>
-
-        <div class="focus-buttons">
-          <button class="btn-primary" id="btnStartFocus">▶ Iniciar</button>
-          <button class="btn-secondary" id="btnStopFocus">⏸ Pausar</button>
-          <button class="btn-small" id="btnResetFocus">↺ Resetar</button>
-        </div>
-
-        <p class="focus-note">
-          Na assinatura Elite e VIP, você desbloqueia trilhas sonoras exclusivas e o modo
-          <strong>"Foco Implacável"</strong>, que bloqueia distrações.
-        </p>
-      </section>
-    </main>
-
-    <!-- PERFIL / ASSINATURA -->
-    <main id="screen-profile" class="app-screen">
-      <section class="profile-card">
-        <div class="profile-row">
-          <div class="profile-avatar-big">BB</div>
-          <div class="profile-main">
-            <div class="profile-name" id="profileName">Bruno Brandão</div>
-            <div class="profile-email" id="profileEmail">email@exemplo.com</div>
-            <div class="profile-plan-chip" id="profilePlanChip">Plano atual: Visionário (Gratuito)</div>
-          </div>
-        </div>
-
-        <div class="profile-lines">
-          <div id="profileCvLine">Capital de Vida: 0 (Risco de oscilação alto)</div>
-          <div id="profileLevelLine">Status: Visionário · liberado para testar protocolos iniciais</div>
-        </div>
-
-        <div class="profile-btn-row">
-          <button class="profile-btn btn-small" id="btnSimularLogin">
-            Simular login com seu e-mail
-          </button>
-          <button class="profile-btn btn-small" id="btnSimularElite">
-            Simular plano Elite
-          </button>
-          <button class="profile-btn btn-small" id="btnSimularVip">
-            Simular plano VIP
-          </button>
-        </div>
-
-        <div class="plans-mini">
-          <p style="margin-top:8px;">
-            <strong>Assinatura Elite:</strong> protocolos ilimitados, 3 KPIs integrados e histórico de CV de 6 meses.
-          </p>
-          <p>
-            <strong>Assinatura VIP:</strong> tudo do Elite + conteúdo extra, comparativo com média da Elite
-            e sessões mensais de revisão.
-          </p>
-
-          <button class="btn-outline-gold" id="btnAssinarPro">
-            💳 Assinar via Stripe (PRO – exemplo)
-          </button>
-
-          <p class="forge-note" id="plansNote" style="margin-top:6px;">
-            Se sua rota /api/checkout estiver configurada, este botão abrirá o pagamento oficial da Stripe.
-          </p>
-        </div>
-      </section>
-    </main>
-  </div>
-
-  <!-- NAV INFERIOR -->
-  <nav class="bottom-nav">
-    <div class="bottom-nav-inner">
-      <div class="nav-item active" data-nav="screen-home">
-        <span class="icon">🏠</span>
-        Home
-      </div>
-      <div class="nav-item" data-nav="screen-forge">
-        <span class="icon">🔥</span>
-        Forja 30X
-      </div>
-      <div class="nav-item" data-nav="screen-analytics">
-        <span class="icon">📈</span>
-        CV
-      </div>
-      <div class="nav-item" data-nav="screen-blueprint">
-        <span class="icon">📚</span>
-        Blueprint
-      </div>
-      <div class="nav-item" data-nav="screen-focus">
-        <span class="icon">⏱</span>
-        Foco
-      </div>
-      <div class="nav-item" data-nav="screen-profile">
-        <span class="icon">👤</span>
-        Perfil
-      </div>
     </div>
-  </nav>
+</div>
 
-  <script>
-    // -------- Navegação entre telas --------
-    const navItems = document.querySelectorAll(".nav-item");
-    const screens = document.querySelectorAll(".app-screen");
+<!-- SALES PAGE -->
+<div id="sales-page">
+    <div class="container" style="padding-top:40px;">
 
-    navItems.forEach((item) => {
-      item.addEventListener("click", () => {
-        const target = item.getAttribute("data-nav");
-        navItems.forEach((i) => i.classList.remove("active"));
-        item.classList.add("active");
-        screens.forEach((s) => {
-          s.classList.remove("active");
-          if (s.id === target) s.classList.add("active");
-        });
-      });
-    });
+        <!-- HERO -->
+        <div class="text-center mb-40">
+            <h1 style="font-size:32px; margin-bottom:20px;">Ganhe Dinheiro Usando Inteligência Artificial de Forma Prática e Real</h1>
+            <p style="font-size:18px; opacity:0.9;">Aprenda estratégias modernas que funcionam hoje para criar renda extra, automatizar processos e escalar resultados com ferramentas gratuitas e acessíveis.</p>
+            
+            <div class="card text-center" style="margin:40px 0;">
+                <p style="font-size:18px; margin-bottom:10px;">Oferta exclusiva expira em:</p>
+                <div class="timer" id="timer">00:00:00</div>
+                <p style="font-size:14px; opacity:0.8; margin-top:10px;">Esta promoção é única para você</p>
+            </div>
+        </div>
 
-    // -------- Capital de Vida (CV) --------
-    const cvValueEl = document.getElementById("cvValue");
-    const cvLevelLabel = document.getElementById("cvLevelLabel");
-    const graphStatus = document.getElementById("graphStatus");
-    const graphCvLabel = document.getElementById("graphCvLabel");
-    const profileCvLine = document.getElementById("profileCvLine");
-    const profileLevelLine = document.getElementById("profileLevelLine");
+        <!-- NOTIFICAÇÕES -->
+        <div class="notification" id="notification"></div>
 
-    function getStoredCv() {
-      const v = parseInt(localStorage.getItem("bm_cv") || "0", 10);
-      return isNaN(v) ? 0 : v;
+        <!-- CONTEÚDO -->
+        <div class="card">
+            <h2 class="text-center mb-20" style="font-size:26px;">O que muda quando você domina a IA lucrativa</h2>
+            <p>Você para de perder horas criando conteúdo manualmente. A IA gera ideias, textos, imagens e estratégias em minutos.</p>
+            <p class="mb-20">Você automatiza tarefas repetitivas e foca no que realmente gera dinheiro: vender, conectar e escalar.</p>
+            <p>Você entra em um fluxo constante de oportunidades reais — sem promessas mágicas, apenas métodos testados que funcionam em 2025.</p>
+        </div>
+
+        <!-- GRÁFICOS SVG -->
+        <div class="card text-center">
+            <h3 style="margin-bottom:30px;">Produtividade com IA</h3>
+            <svg viewBox="0 0 300 200">
+                <rect x="0" y="150" width="60" height="50" fill="#333"/>
+                <rect x="80" y="100" width="60" height="100" fill="#333"/>
+                <rect x="160" y="40" width="60" height="160" fill="var(--accent)"/>
+                <rect x="240" y="10" width="60" height="190" fill="var(--accent)"/>
+                <text x="30" y="190" fill="#aaa" font-size="12">Sem IA</text>
+                <text x="110" y="190" fill="#aaa" font-size="12">Início</text>
+                <text x="190" y="190" fill="#fff" font-size="12">30 dias</text>
+                <text x="270" y="190" fill="#fff" font-size="12">60 dias</text>
+            </svg>
+        </div>
+
+        <div class="card text-center">
+            <h3 style="margin-bottom:30px;">Antes x Depois</h3>
+            <svg viewBox="0 0 300 180">
+                <circle cx="90" cy="90" r="60" fill="#ff3366" opacity="0.3"/>
+                <circle cx="210" cy="90" r="60" fill="var(--accent)" opacity="0.8"/>
+                <text x="90" y="95" fill="#fff" font-size="14" text-anchor="middle">Horas perdidas</text>
+                <text x="210" y="95" fill="#000" font-size="14" text-anchor="middle">Tempo livre</text>
+            </svg>
+        </div>
+
+        <div class="card text-center">
+            <h3 style="margin-bottom:30px;">Evolução dos ganhos</h3>
+            <svg viewBox="0 0 300 180">
+                <polyline fill="none" stroke="var(--accent)" stroke-width="6" points="20,160 80,130 140,90 200,60 260,30"/>
+                <text x="20" y="175" fill="#aaa" font-size="12">Início</text>
+                <text x="260" y="175" fill="#fff" font-size="12">90 dias</text>
+            </svg>
+        </div>
+
+        <!-- BÔNUS IA GRATUITAS -->
+        <div class="card">
+            <h2 class="text-center mb-20" style="font-size:24px;">Ferramentas gratuitas que você vai dominar</h2>
+            <div class="carousel">
+                <div class="tool-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" alt="ChatGPT">
+                    <p>ChatGPT</p>
+                </div>
+                <div class="tool-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Grok_logo.svg" alt="Grok" style="filter:invert(1);">
+                    <p>Grok</p>
+                </div>
+                <div class="tool-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Google_Gemini_logo.svg" alt="Gemini">
+                    <p>Gemini</p>
+                </div>
+                <div class="tool-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Claude_AI_logo.svg" alt="Claude">
+                    <p>Claude</p>
+                </div>
+                <div class="tool-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/4d/Microsoft_Copilot_logo.svg" alt="Copilot">
+                    <p>Copilot</p>
+                </div>
+                <div class="tool-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/9/93/Midjourney_Logo.svg" alt="Midjourney">
+                    <p>Midjourney</p>
+                </div>
+                <div class="tool-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Canva_Logo.svg" alt="Canva AI">
+                    <p>Canva AI</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLATAFORMAS -->
+        <div class="card">
+            <h2 class="text-center mb-20" style="font-size:24px;">Plataformas onde você vai lucrar</h2>
+            <div class="platform-grid">
+                <div class="platform-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png" alt="Instagram">
+                    <p>Instagram</p>
+                </div>
+                <div class="platform-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/TikTok_logo.svg" alt="TikTok">
+                    <p>TikTok</p>
+                </div>
+                <div class="platform-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon.svg" alt="YouTube">
+                    <p>YouTube</p>
+                </div>
+                <div class="platform-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/X_logo_2023_%28black%29.svg" alt="X">
+                    <p>X</p>
+                </div>
+                <div class="platform-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook">
+                    <p>Facebook</p>
+                </div>
+                <div class="platform-item"></div>
+            </div>
+            <p class="text-center">A IA cria conteúdo viral, legendas, roteiros, thumbnails e estratégias de crescimento automático.</p>
+        </div>
+
+        <!-- OFERTAS -->
+        <h2 class="text-center mb-40" style="font-size:28px;">Escolha seu acesso agora</h2>
+
+        <div class="offer-cards">
+            <!-- Oferta 1 - Esgotada -->
+            <div class="offer-card card">
+                <div class="sold-out">ESGOTADA</div>
+                <h3 style="font-size:22px;">Básica</h3>
+                <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 19,90</p>
+                <div class="btn btn-disabled">Indisponível no momento</div>
+            </div>
+
+            <!-- Oferta 2 -->
+            <div class="offer-card card">
+                <h3 style="font-size:22px;">IA Lucrativa</h3>
+                <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 29,99</p>
+                <p style="opacity:0.9;">✓ Acesso imediato<br>✓ Estratégias práticas<br>✓ Suporte comunitário</p>
+                <a href="https://pay.cakto.com.br/4ehcq2y_672236" class="btn btn-primary">
+                    🚀 Quero começar agora<br><small>Acesso vitalício • Oferta limitada</small>
+                </a>
+            </div>
+
+            <!-- Oferta 3 - Mais escolhida -->
+            <div class="offer-card card">
+                <div class="most-popular">Mais escolhida</div>
+                <h3 style="font-size:22px;">IA Lucrativa Completa</h3>
+                <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 29,99</p>
+                <p style="opacity:0.9;">✓ Tudo da versão padrão<br>✓ Bônus exclusivos<br>✓ Atualizações prioritárias<br>✓ Resultados mais rápidos</p>
+                <a href="https://pay.cakto.com.br/v8k65mm_672262" class="btn btn-primary">
+                    🔥 Quero o acesso completo<br><small>Melhor opção • Últimas vagas</small>
+                </a>
+            </div>
+        </div>
+
+        <div style="height:100px;"></div>
+    </div>
+</div>
+
+<script>
+    // Quiz logic
+    let currentQuiz = 1;
+    function nextQuiz(next) {
+        document.getElementById('quiz-' + currentQuiz).style.display = 'none';
+        document.getElementById('quiz-' + next).style.display = 'block';
+        currentQuiz = next;
+        document.getElementById('progress').style.width = (next / 4 * 100) + '%';
+    }
+    function goToSales() {
+        document.getElementById('quiz-section').style.display = 'none';
+        document.getElementById('sales-page').style.display = 'block';
+        startTimer();
+        startNotifications();
     }
 
-    function setStoredCv(v) {
-      localStorage.setItem("bm_cv", String(v));
-    }
-
-    function getCvLevel(cv) {
-      if (cv >= 5001) return "VIP";
-      if (cv >= 2001) return "Elite";
-      if (cv >= 501) return "Executor";
-      return "Visionário";
-    }
-
-    function updateCvUi() {
-      const cv = getStoredCv();
-      cvValueEl.textContent = cv;
-      const level = getCvLevel(cv);
-      cvLevelLabel.textContent = "Nível: " + level;
-
-      graphCvLabel.textContent = "CV atual: " + cv;
-
-      if (cv === 0) {
-        graphStatus.textContent = "CV neutro · pronto para começar";
-      } else if (cv < 500) {
-        graphStatus.textContent = "CV em construção · risco de queda alto";
-      } else if (cv < 2000) {
-        graphStatus.textContent = "CV em ascensão · disciplina crescente";
-      } else if (cv < 5000) {
-        graphStatus.textContent = "Patrimônio mental consolidado em alta";
-      } else {
-        graphStatus.textContent = "Zona VIP · mantenha a disciplina implacável";
-      }
-
-      let risco = "Risco de oscilação alto";
-      if (cv >= 2000) risco = "Patrimônio mental em consolidação";
-      if (cv >= 5000) risco = "Risco de queda baixo · sua disciplina está cara";
-
-      profileCvLine.textContent = "Capital de Vida: " + cv + " (" + risco + ")";
-      profileLevelLine.textContent = "Status: " + level + " · seu acesso aumenta com o seu CV.";
-    }
-
-    updateCvUi();
-
-    // -------- Forja: conclusão diária --------
-    const btnConcluirDia = document.getElementById("btnConcluirDia");
-    const forgeNote = document.getElementById("forgeNote");
-    const forgeTask = document.getElementById("forgeTask");
-    const forgeTime = document.getElementById("forgeTime");
-    const forgeQuality = document.getElementById("forgeQuality");
-
-    function hasCompletedToday() {
-      const todayStr = new Date().toISOString().slice(0, 10);
-      const last = localStorage.getItem("bm_last_forge");
-      return last === todayStr;
-    }
-
-    function setCompletedToday() {
-      const todayStr = new Date().toISOString().slice(0, 10);
-      localStorage.setItem("bm_last_forge", todayStr);
-    }
-
-    function updateForgeState() {
-      if (hasCompletedToday()) {
-        btnConcluirDia.disabled = true;
-        btnConcluirDia.textContent = "Protocolo de hoje já concluído";
-        forgeNote.innerHTML = "Você já ganhou <span>+120 de CV</span> hoje. Volte amanhã para manter sua linha em ascensão.";
-      }
-    }
-    updateForgeState();
-
-    btnConcluirDia.addEventListener("click", () => {
-      if (hasCompletedToday()) return;
-
-      const task = forgeTask.value.trim();
-      const t = forgeTime.value.trim();
-      const q = forgeQuality.value.trim();
-      if (!task || !t || !q) {
-        alert("Preencha os três campos antes de concluir o protocolo.");
-        return;
-      }
-
-      const currentCv = getStoredCv();
-      const newCv = currentCv + 120;
-      setStoredCv(newCv);
-      setCompletedToday();
-      updateCvUi();
-      updateForgeState();
-      alert("Protocolo concluído. Seu CV subiu para " + newCv + ".");
-    });
-
-    // -------- KPIs simples de exemplo --------
-    const kpiFocus = document.getElementById("kpiFocus");
-    const kpiRevenue = document.getElementById("kpiRevenue");
-    const kpiTraining = document.getElementById("kpiTraining");
-
-    // Só para visual: correlaciona KPIs com CV atual
-    function updateKpis() {
-      const cv = getStoredCv();
-      const foco = (cv / 400).toFixed(1); // ex: com 120 CV -> 0.3h
-      const receita = cv * 1.5; // só demonstrativo
-      const treino = Math.min(7, Math.floor(cv / 600)); // até 7 por semana
-
-      kpiFocus.textContent = foco + " h";
-      kpiRevenue.textContent = "R$ " + receita.toFixed(0);
-      kpiTraining.textContent = treino + " sessões";
-    }
-    updateKpis();
-
-    // -------- Foco (Pomodoro básico) --------
-    const focusTimeEl = document.getElementById("focusTime");
-    const focusLabelEl = document.getElementById("focusLabel");
-    const btnStartFocus = document.getElementById("btnStartFocus");
-    const btnStopFocus = document.getElementById("btnStopFocus");
-    const btnResetFocus = document.getElementById("btnResetFocus");
-
-    let focusSeconds = 25 * 60;
-    let focusTimer = null;
-
-    function renderFocusTime() {
-      const m = String(Math.floor(focusSeconds / 60)).padStart(2, "0");
-      const s = String(focusSeconds % 60).padStart(2, "0");
-      focusTimeEl.textContent = m + ":" + s;
-    }
-    renderFocusTime();
-
-    function stopFocusTimer() {
-      if (focusTimer) {
-        clearInterval(focusTimer);
-        focusTimer = null;
-      }
-    }
-
-    btnStartFocus.addEventListener("click", () => {
-      if (focusTimer) return;
-      focusLabelEl.textContent = "Bloco de foco em andamento. Não negocie esses minutos.";
-      focusTimer = setInterval(() => {
-        if (focusSeconds <= 0) {
-          stopFocusTimer();
-          focusLabelEl.textContent = "Bloco concluído. Seu CV merece um upgrade.";
-          // pequeno bônus simbólico
-          const newCv = getStoredCv() + 40;
-          setStoredCv(newCv);
-          updateCvUi();
-          updateKpis();
-          alert("Bloco de foco completo. Seu CV subiu para " + newCv + ".");
-          return;
-        }
-        focusSeconds--;
-        renderFocusTime();
-      }, 1000);
-    });
-
-    btnStopFocus.addEventListener("click", () => {
-      stopFocusTimer();
-      focusLabelEl.textContent = "Pausa. Retome o bloco assim que possível.";
-    });
-
-    btnResetFocus.addEventListener("click", () => {
-      stopFocusTimer();
-      focusSeconds = 25 * 60;
-      renderFocusTime();
-      focusLabelEl.textContent = "Pronto para iniciar o bloco de foco.";
-    });
-
-    // -------- Perfil / Simulações --------
-    const profileEmail = document.getElementById("profileEmail");
-    const profilePlanChip = document.getElementById("profilePlanChip");
-    const badgeCv = document.querySelector(".badge-cv");
-    const btnSimularLogin = document.getElementById("btnSimularLogin");
-    const btnSimularElite = document.getElementById("btnSimularElite");
-    const btnSimularVip = document.getElementById("btnSimularVip");
-
-    btnSimularLogin.addEventListener("click", () => {
-      profileEmail.textContent = "brunobrandao179@gmail.com";
-      alert("Login simulado com seu e-mail.");
-    });
-
-    btnSimularElite.addEventListener("click", () => {
-      profilePlanChip.textContent = "Plano atual: Elite";
-      profilePlanChip.style.borderColor = "#facc6b";
-      badgeCv.style.borderColor = "rgba(250, 204, 107, 0.7)";
-    });
-
-    btnSimularVip.addEventListener("click", () => {
-      profilePlanChip.textContent = "Plano atual: VIP";
-      profilePlanChip.style.borderColor = "#facc6b";
-      badgeCv.style.borderColor = "rgba(250, 204, 107, 0.9)";
-    });
-
-    // -------- Stripe (se /api/checkout existir) --------
-    const btnAssinarPro = document.getElementById("btnAssinarPro");
-    const plansNote = document.getElementById("plansNote");
-
-    btnAssinarPro.addEventListener("click", async () => {
-      try {
-        const res = await fetch("/api/checkout", { method: "POST" });
-        const data = await res.json();
-        if (data.url) {
-          window.location.href = data.url;
+    // Timer único por usuário
+    function startTimer() {
+        const saved = localStorage.getItem('iaLucrativaTimer');
+        let endTime;
+        if (saved) {
+            endTime = parseInt(saved);
         } else {
-          plansNote.textContent = "Erro ao criar pagamento. Verifique se a rota /api/checkout está configurada.";
+            // Entre 4 e 12 horas aleatórias
+            const hours = 4 + Math.floor(Math.random() * 9);
+            endTime = Date.now() + hours * 3600000;
+            localStorage.setItem('iaLucrativaTimer', endTime);
         }
-      } catch (e) {
-        plansNote.textContent = "Erro de conexão com o servidor. Tente novamente em alguns instantes.";
-      }
-    });
-  </script>
+
+        const timer = setInterval(() => {
+            const diff = endTime - Date.now();
+            if (diff <= 0) {
+                clearInterval(timer);
+                document.getElementById('timer').innerText = '00:00:00';
+                return;
+            }
+            const h = Math.floor(diff / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+            document.getElementById('timer').innerText = 
+                String(h).padStart(2,'0') + ':' + 
+                String(m).padStart(2,'0') + ':' + 
+                String(s).padStart(2,'0');
+        }, 1000);
+    }
+
+    // Notificações falsas realistas
+    const names = ['João S.', 'Maria L.', 'Pedro R.', 'Ana C.', 'Lucas M.', 'Carla F.', 'Rafael T.', 'Juliana P.', 'Thiago K.', 'Beatriz O.'];
+    const countries = ['Brasil', 'Portugal', 'EUA', 'Canadá', 'Espanha'];
+    const offers = ['IA Lucrativa', 'IA Lucrativa Completa'];
+    let usedNames = [];
+
+    function showNotification() {
+        if (usedNames.length === names.length) usedNames = [];
+        
+        let name;
+        do { name = names[Math.floor(Math.random() * names.length)]; }
+        while (usedNames.includes(name));
+        usedNames.push(name);
+
+        const country = countries[Math.floor(Math.random() * countries.length)];
+        const offer = offers[Math.floor(Math.random() * offers.length)];
+        
+        const notif = document.getElementById('notification');
+        notif.innerHTML = `<strong>${name}</strong> de ${country} acabou de adquirir <strong>${offer}</strong>`;
+        notif.style.opacity = '1';
+        setTimeout(() => { notif.style.opacity = '0'; }, 5000);
+    }
+
+    function startNotifications() {
+        setTimeout(() => {
+            showNotification();
+            setInterval(showNotification, Math.random() * 20000 + 20000);
+        }, 15000);
+    }
+</script>
+
 </body>
 </html>
