@@ -8,6 +8,14 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16917756362"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-16917756362');
+    </script>
     <style>
         :root {
             --bg: #0f0f17;
@@ -244,7 +252,7 @@
                 <h3 id="offer2-title" style="font-size:22px;">IA Lucrativa</h3>
                 <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 19,90</p>
                 <p id="offer2-benefits" style="opacity:0.9;">✓ Acesso imediato<br>✓ Estratégias práticas<br>✓ Suporte comunitário<br>✓ Ferramentas gratuitas<br>✓ Atualizações mensais<br>✓ Guia rápido de início</p>
-                <a href="https://pay.cakto.com.br/4ehcq2y_672236" class="btn btn-primary">
+                <a href="https://pay.cakto.com.br/4ehcq2y_672236" class="btn btn-primary" onclick="trackConversion()">
                     <span id="offer2-btn-text">🚀 Quero começar agora</span><br><small id="offer2-btn-small">Acesso vitalício • Oferta limitada • Antes que expire!</small>
                 </a>
             </div>
@@ -255,7 +263,7 @@
                 <h3 id="offer3-title" style="font-size:22px;">IA Lucrativa Completa</h3>
                 <p style="font-size:36px; color:var(--accent); margin:20px 0;">R$ 29,90</p>
                 <p id="offer3-benefits" style="opacity:0.9;">✓ Tudo da versão padrão<br>✓ Bônus exclusivos<br>✓ Atualizações prioritárias<br>✓ Resultados mais rápidos<br>✓ Comunidade VIP<br>✓ Mentoria básica</p>
-                <a href="https://pay.cakto.com.br/v8k65mm_672262" class="btn btn-primary">
+                <a href="https://pay.cakto.com.br/v8k65mm_672262" class="btn btn-primary" onclick="trackConversion()">
                     <span id="offer3-btn-text">🔥 Quero o acesso completo</span><br><small id="offer3-btn-small">Melhor opção • Últimas vagas • Ação imediata!</small>
                 </a>
             </div>
@@ -493,6 +501,12 @@
         }, 15000);
     }
 </script>
-
+<script>
+function trackConversion() {
+  gtag('event', 'conversion', {
+    'send_to': 'AW-16917756362/COLE_AQUI_O_ID_DO_EVENTO'
+  });
+}
+</script>
 </body>
 </html>
