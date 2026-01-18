@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>BillionMind - Desbloqueie Seu Potencial Máximo com IA</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
     <style>
@@ -13,63 +13,75 @@
             color: #e0e0e0; 
             background-color: #121212; 
             line-height: 1.6; 
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
         .container { 
             max-width: 100%; 
+            width: 100%; /* Full width for mobile */
             margin: 0 auto; 
-            padding: 0 20px; 
+            padding: 0 15px; /* Reduced padding for tighter fit on small screens */
+            box-sizing: border-box;
         }
         header { 
             background-color: #000000; 
             text-align: center; 
-            padding: 80px 20px; 
+            padding: 60px 15px; /* Adjusted padding for mobile */
             animation: fadeIn 1.5s ease-in-out; 
         }
         h1 { 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 2.5em; 
+            font-size: 2em; /* Smaller base for mobile */
             margin-bottom: 10px; 
             color: #ffffff; 
         }
         h2 { 
             font-family: 'Orbitron', sans-serif; 
-            font-size: 1.8em; 
-            margin-top: 40px; 
+            font-size: 1.5em; /* Smaller base for mobile */
+            margin-top: 30px; /* Reduced spacing */
             color: #4fc3f7; 
         }
         p { 
-            font-size: 1.1em; 
+            font-size: 1em; /* Adjusted for readability on mobile */
+            margin: 10px 0;
         }
         .section { 
-            padding: 40px 0; 
+            padding: 30px 0; /* Reduced section padding */
             animation: slideUp 1s ease-out; 
         }
         .card { 
             background-color: #1e1e1e; 
             border-radius: 12px; 
-            padding: 20px; 
-            margin: 20px 0; 
+            padding: 15px; /* Smaller padding inside cards */
+            margin: 15px 0; 
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); 
             transition: transform 0.3s ease; 
+            width: 100%; /* Full width cards */
+            box-sizing: border-box;
         }
         .card:hover { 
             transform: translateY(-5px); 
         }
         .icon { 
-            width: 60px; 
-            height: 60px; 
-            margin-bottom: 15px; 
+            width: 50px; /* Slightly smaller icons */
+            height: 50px; 
+            margin-bottom: 10px; 
+            display: block;
+            margin-left: auto;
+            margin-right: auto; /* Center icons on mobile */
         }
         .cta-button { 
             background-color: #4fc3f7; 
             color: #000000; 
-            padding: 15px 30px; 
+            padding: 12px 20px; /* Adjusted button padding */
             text-decoration: none; 
             border-radius: 50px; 
             font-weight: 500; 
-            display: inline-block; 
-            margin: 10px 0; 
+            display: block; /* Block for full width */
+            margin: 10px auto; 
             transition: background-color 0.3s, transform 0.3s; 
+            width: 100%; /* Full width buttons on mobile */
+            text-align: center;
+            box-sizing: border-box;
         }
         .cta-button:hover { 
             background-color: #039be5; 
@@ -94,8 +106,8 @@
         footer { 
             background-color: #000000; 
             text-align: center; 
-            padding: 20px; 
-            font-size: 0.9em; 
+            padding: 15px; /* Reduced footer padding */
+            font-size: 0.8em; /* Smaller font for footer */
         }
         @keyframes fadeIn { 
             from { opacity: 0; } 
@@ -105,12 +117,15 @@
             from { transform: translateY(50px); opacity: 0; } 
             to { transform: translateY(0); opacity: 1; } 
         }
-        /* Mobile Optimization */
-        @media (max-width: 768px) { 
-            h1 { font-size: 2em; } 
-            h2 { font-size: 1.5em; } 
-            .card { margin: 15px 0; } 
-            .cta-button { width: 100%; } 
+        /* Enhanced Mobile Optimization */
+        @media (max-width: 480px) { /* Target smaller phones */
+            body { font-size: 14px; } /* Base font adjustment */
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.3em; }
+            .card { padding: 12px; margin: 10px 0; }
+            .cta-button { padding: 10px 15px; font-size: 0.9em; }
+            .icon { width: 40px; height: 40px; }
+            img[style*="width: 100%; max-width: 300px;"] { max-width: 100%; height: auto; } /* Ensure images fit screen */
         }
     </style>
 </head>
@@ -160,23 +175,23 @@
             <h2>Comece a Vencer em Minutos – É Simples Assim</h2>
             <p>Não perca tempo com complicações. Veja como o BillionMind entrega valor imediato e resultados transformadores:</p>
             <div class="card">
-                <img src="https://s3-alpha.figma.com/hub/file/2281710451292775083/9f5272b0-cfb4-448d-995f-3b96bdad0b15-cover.png" alt="Mockup Abra o App" class="icon" style="width: 100%; max-width: 300px;">
+                <img src="https://s3-alpha.figma.com/hub/file/2281710451292775083/9f5272b0-cfb4-448d-995f-3b96bdad0b15-cover.png" alt="Mockup Abra o App" class="icon" style="width: 100%; max-width: 100%; height: auto;">
                 <p><strong>1. Abra o App Instantaneamente:</strong> Sem login chato – mergulhe direto na ação e sinta o poder da IA.</p>
             </div>
             <div class="card">
-                <img src="https://www.shutterstock.com/image-vector/dashboard-app-ui-webpage-analytics-260nw-2485113535.jpg" alt="Mockup Converse com IA" class="icon" style="width: 100%; max-width: 300px;">
+                <img src="https://www.shutterstock.com/image-vector/dashboard-app-ui-webpage-analytics-260nw-2485113535.jpg" alt="Mockup Converse com IA" class="icon" style="width: 100%; max-width: 100%; height: auto;">
                 <p><strong>2. Converse com a IA Inteligente:</strong> Pergunte qualquer coisa – receba respostas que impulsionam seu sucesso real.</p>
             </div>
             <div class="card">
-                <img src="https://cdn.prod.website-files.com/65c1ae21fb2191466dd6ce72/6634b92db4efd03f80f7d047_03.jpg" alt="Mockup Receba Orientação" class="icon" style="width: 100%; max-width: 300px;">
+                <img src="https://cdn.prod.website-files.com/65c1ae21fb2191466dd6ce72/6634b92db4efd03f80f7d047_03.jpg" alt="Mockup Receba Orientação" class="icon" style="width: 100%; max-width: 100%; height: auto;">
                 <p><strong>3. Receba Orientação Prática e Personalizada:</strong> Planos acionáveis que elevam sua vida profissional e pessoal.</p>
             </div>
             <div class="card">
-                <img src="https://s3-alpha.figma.com/hub/file/5902074171/c7bde065-b6ec-4abc-9f28-54f08c2fb7a9-cover.png" alt="Mockup Evolua Diariamente" class="icon" style="width: 100%; max-width: 300px;">
+                <img src="https://s3-alpha.figma.com/hub/file/5902074171/c7bde065-b6ec-4abc-9f28-54f08c2fb7a9-cover.png" alt="Mockup Evolua Diariamente" class="icon" style="width: 100%; max-width: 100%; height: auto;">
                 <p><strong>4. Evolua Diariamente com Desafios:</strong> Veja progressos reais que motivam e constroem hábitos vencedores.</p>
             </div>
             <div class="card">
-                <img src="https://www.taxmann.com/post/wp-content/uploads/2025/03/1.-Different-Dimensions-of-Entrepreneurship-in-the-Modern-Era.jpg" alt="Mockup Desbloqueie Premium" class="icon" style="width: 100%; max-width: 300px;">
+                <img src="https://www.taxmann.com/post/wp-content/uploads/2025/03/1.-Different-Dimensions-of-Entrepreneurship-in-the-Modern-Era.jpg" alt="Mockup Desbloqueie Premium" class="icon" style="width: 100%; max-width: 100%; height: auto;">
                 <p><strong>5. Desbloqueie o Premium para Domínio Total:</strong> Acesso ilimitado que multiplica seus resultados exponencialmente.</p>
             </div>
         </div>
@@ -212,7 +227,7 @@
                 <p><strong>Health & Focus Completo:</strong> Rotinas personalizadas para performance inabalável.</p>
                 <p><strong>Progresso Avançado com Métricas:</strong> Dashboards que mostram seu crescimento explosivo.</p>
                 <p><strong>Atualizações Automáticas e VIP:</strong> Sempre à frente com as novidades mais quentes.</p>
-                <a href="https://billionmind.lovable.app" class="cta-button" style="width: 100%;">Assine Premium Agora e Multiplique Seus Resultados — $29.98/mês</a>
+                <a href="https://billionmind.lovable.app" class="cta-button">Assine Premium Agora e Multiplique Seus Resultados — $29.98/mês</a>
             </div>
             <p style="text-align: center; font-style: italic;">Oferta limitada: Assine hoje e transforme amanhã. Não espere – oportunidades como essa não duram para sempre.</p>
         </div>
@@ -222,7 +237,7 @@
         <div class="container" style="text-align: center;">
             <h2>Pronto para Dominar Seu Destino? Comece Agora e Veja a Magia Acontecer</h2>
             <p>Não deixe o sucesso escapar. Milhares já evoluíram – é a sua vez de brilhar. Clique abaixo e inicie sua transformação hoje!</p>
-            <a href="https://billionmind.lovable.app" class="cta-button" style="width: 100%;">Entrar no BillionMind e Conquistar o Mundo</a>
+            <a href="https://billionmind.lovable.app" class="cta-button">Entrar no BillionMind e Conquistar o Mundo</a>
         </div>
     </section>
 
